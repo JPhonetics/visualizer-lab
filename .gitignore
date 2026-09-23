@@ -1,0 +1,138 @@
+# ==============================
+# APPLICATION RUNTIME
+# ==============================
+
+celerybeat.pid
+celerybeat-schedule
+gunicorn.ctl
+
+
+# ==============================
+# BUILD / DISTRIBUTION
+# ==============================
+
+build/
+dist/
+dist-ssr/
+
+
+# ==============================
+# COVERAGE / TEST OUTPUT
+# ==============================
+
+.coverage
+.coverage.*
+coverage/
+coverage.xml
+htmlcov/
+
+cypress/downloads/
+cypress/screenshots/
+cypress/videos/
+
+
+# ==============================
+# DJANGO / PYTHON APPS
+# ==============================
+
+db.sqlite3
+db.sqlite3-journal
+local_settings.py
+
+
+# ==============================
+# EDITORS / IDEs
+# ==============================
+
+.idea/
+
+.vscode/*
+!.vscode/extensions.json
+
+*.njsproj
+*.ntvs*
+*.sln
+*.suo
+*.sw?
+
+
+# ==============================
+# ENVIRONMENT / SECRETS
+# ==============================
+
+.env
+.env.*
+!.env.example
+
+.venv/
+ENV/
+env/
+venv/
+
+
+# ==============================
+# LOGS
+# ==============================
+
+logs/
+*.log
+
+lerna-debug.log*
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# ==============================
+# NODE / JAVASCRIPT
+# ==============================
+
+node_modules/
+
+*.local
+
+.vite/
+
+
+# ==============================
+# OPERATING SYSTEM
+# ==============================
+
+.DS_Store
+Thumbs.db
+
+
+# ==============================
+# PYTHON
+# ==============================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.so
+
+*.egg
+*.egg-info/
+.eggs/
+
+__pypackages__/
+
+.hypothesis/
+.mypy_cache/
+.pyre/
+.pytest_cache/
+.pytype/
+.tox/
+.nox/
+
+
+# ==============================
+# TEMP / CACHE FILES
+# ==============================
+
+.cache/
+
+*.temp
+*.tmp
