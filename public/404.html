@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+
+        <script>
+            /*
+                GitHub Pages does not know about React Router
+                routes such as:
+
+                /frontend
+                /javascript
+                /python
+
+                When one of those URLs is requested directly,
+                GitHub Pages serves this 404.html file.
+
+                We temporarily encode the requested route into
+                the query string and redirect back to the site
+                root.
+
+                index.html then restores the original clean URL
+                before React starts.
+            */
+
+            const locationObject =
+                window.location
+
+            locationObject.replace(
+                locationObject.protocol
+                + "//"
+                + locationObject.hostname
+                + (
+                    locationObject.port
+                        ? `:${locationObject.port}`
+                        : ""
+                )
+                + "/?/"
+                + locationObject.pathname
+                    .slice(1)
+                    .replace(
+                        /&/g,
+                        "~and~",
+                    )
+                + (
+                    locationObject.search
+                        ? "&"
+                            + locationObject.search
+                                .slice(1)
+                                .replace(
+                                    /&/g,
+                                    "~and~",
+                                )
+                        : ""
+                )
+                + locationObject.hash,
+            )
+        </script>
+
+        <title>Visualizer Lab</title>
+    </head>
+
+    <body>
+    </body>
+</html>
