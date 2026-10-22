@@ -60,19 +60,16 @@ import { useState } from "react"
 
 const DEVICE_MODES = [
     {
-        icon: "🖥",
         id: "desktop",
         label: "Desktop",
         width: null,
     },
     {
-        icon: "▯",
         id: "tablet",
         label: "Tablet",
         width: 768,
     },
     {
-        icon: "📱",
         id: "phone",
         label: "Phone",
         width: 390,

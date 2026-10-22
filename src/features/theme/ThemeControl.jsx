@@ -80,13 +80,17 @@ const THEME_STORAGE_KEY = "visualizerLab.theme"
 // This keeps the application from starting in a broken state.
 
 function getSavedTheme() {
-    const savedTheme = localStorage.getItem(
-        THEME_STORAGE_KEY,
-    )
+    try {
+        const savedTheme = localStorage.getItem(
+            THEME_STORAGE_KEY,
+        )
 
-    return THEME_OPTIONS.includes(savedTheme)
-        ? savedTheme
-        : "system"
+        return THEME_OPTIONS.includes(savedTheme)
+            ? savedTheme
+            : "system"
+    } catch {
+        return "system"
+    }
 }
 
 
@@ -206,10 +210,14 @@ function ThemeControl() {
 
         applyTheme()
 
-        localStorage.setItem(
-            THEME_STORAGE_KEY,
-            themePreference,
-        )
+        try {
+            localStorage.setItem(
+                THEME_STORAGE_KEY,
+                themePreference,
+            )
+        } catch {
+            // Theme still works for this session when storage is unavailable.
+        }
 
 
         // ==============================

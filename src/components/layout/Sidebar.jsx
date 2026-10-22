@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 
 import Button from "../ui/Button.jsx"
 import useLocalStorageState from "../../hooks/useLocalStorageState.js"
+import keyboardResize from "../../utils/keyboardResize.js"
 
 // ==============================
 // SIDEBAR
@@ -110,6 +111,10 @@ const STORAGE_KEYS = {
 function Sidebar({
     isExpanded,
     onResizeStart,
+    onResizeKeyDown,
+    width,
+    minimumWidth,
+    maximumWidth,
     onToggle,
 }) {
 
@@ -206,6 +211,51 @@ function Sidebar({
         useRef(null)
 
 
+    const [templatesMaximumHeight, setTemplatesMaximumHeight] =
+        useState(MAXIMUM_TEMPLATES_HEIGHT)
+
+    function getTemplatesMaximumHeight() {
+        return Math.min(
+            MAXIMUM_TEMPLATES_HEIGHT,
+            Math.max(
+                MINIMUM_TEMPLATES_HEIGHT,
+                (sidebarRef.current?.getBoundingClientRect().height ?? 540) - 180,
+            ),
+        )
+    }
+
+    function handleTemplatesResizeFocus() {
+        const maximum = getTemplatesMaximumHeight()
+        setTemplatesMaximumHeight(maximum)
+        // A saved height may exceed the space in a newly shortened window.
+        if (templatesHeight > maximum) {
+            setTemplatesHeight(maximum)
+        }
+    }
+
+    function handleTemplatesResizeKeyDown(event) {
+        if (isTemplatesResizing) {
+            return
+        }
+
+        const maximum = getTemplatesMaximumHeight()
+
+        const nextHeight = keyboardResize(event, {
+            value: templatesHeight,
+            minimum: MINIMUM_TEMPLATES_HEIGHT,
+            maximum,
+            step: 10,
+            increaseKey: "ArrowUp",
+            decreaseKey: "ArrowDown",
+        })
+
+        if (nextHeight !== null) {
+            setTemplatesMaximumHeight(maximum)
+            setTemplatesHeight(nextHeight)
+        }
+    }
+
+
     // ==============================
     // TEMPLATE TOGGLE
     // ==============================
@@ -294,22 +344,8 @@ function Sidebar({
             Search
             Current Work / Saved Work
         */
-        const availableMaximumHeight =
-            Math.max(
-                MINIMUM_TEMPLATES_HEIGHT,
-                sidebarBounds.height - 180,
-            )
-
-
-        /*
-            Even on a very tall browser window, Templates remains
-            capped at 360px.
-        */
-        const maximumHeight =
-            Math.min(
-                MAXIMUM_TEMPLATES_HEIGHT,
-                availableMaximumHeight,
-            )
+        const maximumHeight = getTemplatesMaximumHeight()
+        setTemplatesMaximumHeight(Math.max(maximumHeight, templatesHeight))
 
 
         /*
@@ -715,6 +751,16 @@ function Sidebar({
                             <div
                                 className="templates-resize-handle"
                                 title="Resize Templates"
+                                role="separator"
+                                aria-label="Templates height"
+                                aria-orientation="horizontal"
+                                aria-valuemin={MINIMUM_TEMPLATES_HEIGHT}
+                                aria-valuemax={templatesMaximumHeight}
+                                aria-valuenow={templatesHeight}
+                                aria-valuetext={`${templatesHeight} pixels`}
+                                tabIndex={0}
+                                onFocus={handleTemplatesResizeFocus}
+                                onKeyDown={handleTemplatesResizeKeyDown}
                                 onPointerDown={
                                     handleTemplatesResizeStart
                                 }
@@ -793,6 +839,15 @@ function Sidebar({
                 <div
                     className="sidebar-resize-handle"
                     title="Resize sidebar"
+                    role="separator"
+                    aria-label="Workspace sidebar width"
+                    aria-orientation="vertical"
+                    aria-valuemin={minimumWidth}
+                    aria-valuemax={maximumWidth}
+                    aria-valuenow={width}
+                    aria-valuetext={`${width} pixels`}
+                    tabIndex={0}
+                    onKeyDown={onResizeKeyDown}
                     onPointerDown={
                         handleSidebarResizeStart
                     }

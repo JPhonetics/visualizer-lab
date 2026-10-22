@@ -2043,3 +2043,42 @@
         min-width: 40px;
     }
 }
+
+/* Keep the thin resize controls visible when reached by keyboard. */
+.sidebar-resize-handle:focus-visible,
+.templates-resize-handle:focus-visible,
+.workspace-divider:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -2px;
+    background-color: var(--color-resize);
+}
+
+/* Author display rules must not expose inactive tab panels. */
+.editor-placeholder[hidden] {
+    display: none;
+}
+
+
+/* Device changes are announced without adding text to the compact toolbar. */
+.screen-reader-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Restrained accents and softer dividers preserve the existing shell geometry. */
+:root[data-theme="dark"] .preview-toggle.active,
+:root[data-theme="dark"] .visualizer-menu-item.active {
+    color: var(--color-accent);
+    background-color: var(--color-accent-surface);
+}
+
+:root[data-theme="dark"] .workspace-divider {
+    border-color: var(--color-border-soft);
+}

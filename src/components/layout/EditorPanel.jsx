@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useId, useRef, useState } from "react"
 
 import Button from "../ui/Button.jsx"
 import Panel from "./Panel.jsx"
@@ -57,6 +57,9 @@ import Panel from "./Panel.jsx"
 */
 
 
+const LANGUAGES = ["html", "css", "javascript"]
+
+
 function EditorPanel({
     onCollapse,
 }) {
@@ -81,6 +84,37 @@ function EditorPanel({
         useState("html")
 
 
+    const tabsId = useId()
+    const tabRefs = useRef({})
+
+    function handleTabKeyDown(event, language) {
+        const index = LANGUAGES.indexOf(language)
+        let nextIndex
+
+        switch (event.key) {
+            case "ArrowRight":
+                nextIndex = (index + 1) % LANGUAGES.length
+                break
+            case "ArrowLeft":
+                nextIndex = (index + LANGUAGES.length - 1) % LANGUAGES.length
+                break
+            case "Home":
+                nextIndex = 0
+                break
+            case "End":
+                nextIndex = LANGUAGES.length - 1
+                break
+            default:
+                return
+        }
+
+        event.preventDefault()
+        const nextLanguage = LANGUAGES[nextIndex]
+        setActiveLanguage(nextLanguage)
+        tabRefs.current[nextLanguage]?.focus()
+    }
+
+
     // ==============================
     // EDITOR HEADER
     // ==============================
@@ -97,59 +131,22 @@ function EditorPanel({
                 role="tablist"
                 aria-label="Editor language"
             >
-                <Button
-                    className={`editor-tab ${
-                        activeLanguage === "html"
-                            ? "active"
-                            : ""
-                    }`}
-                    role="tab"
-                    aria-selected={
-                        activeLanguage === "html"
-                    }
-                    onClick={() =>
-                        setActiveLanguage("html")
-                    }
-                >
-                    HTML
-                </Button>
-
-                <Button
-                    className={`editor-tab ${
-                        activeLanguage === "css"
-                            ? "active"
-                            : ""
-                    }`}
-                    role="tab"
-                    aria-selected={
-                        activeLanguage === "css"
-                    }
-                    onClick={() =>
-                        setActiveLanguage("css")
-                    }
-                >
-                    CSS
-                </Button>
-
-                <Button
-                    className={`editor-tab ${
-                        activeLanguage === "javascript"
-                            ? "active"
-                            : ""
-                    }`}
-                    role="tab"
-                    aria-selected={
-                        activeLanguage
-                            === "javascript"
-                    }
-                    onClick={() =>
-                        setActiveLanguage(
-                            "javascript",
-                        )
-                    }
-                >
-                    JavaScript
-                </Button>
+                {LANGUAGES.map((language) => (
+                    <Button
+                        key={language}
+                        ref={(node) => { tabRefs.current[language] = node }}
+                        id={`${tabsId}-${language}-tab`}
+                        className={`editor-tab ${activeLanguage === language ? "active" : ""}`}
+                        role="tab"
+                        aria-selected={activeLanguage === language}
+                        aria-controls={`${tabsId}-${language}-panel`}
+                        tabIndex={activeLanguage === language ? 0 : -1}
+                        onClick={() => setActiveLanguage(language)}
+                        onKeyDown={(event) => handleTabKeyDown(event, language)}
+                    >
+                        {language === "javascript" ? "JavaScript" : language.toUpperCase()}
+                    </Button>
+                ))}
             </div>
 
 
@@ -201,9 +198,19 @@ function EditorPanel({
             header={editorHeader}
             className="editor-panel"
         >
-            <div className="editor-placeholder">
-                {activeLanguage} Editor
-            </div>
+            {LANGUAGES.map((language) => (
+                <div
+                    key={language}
+                    id={`${tabsId}-${language}-panel`}
+                    className="editor-placeholder"
+                    role="tabpanel"
+                    aria-labelledby={`${tabsId}-${language}-tab`}
+                    hidden={activeLanguage !== language}
+                    tabIndex={0}
+                >
+                    {language} Editor
+                </div>
+            ))}
         </Panel>
     )
 }

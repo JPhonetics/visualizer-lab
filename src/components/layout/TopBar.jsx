@@ -170,6 +170,21 @@ function TopBar() {
     */
     const visualizerSelectorRef =
         useRef(null)
+    const visualizerTriggerRef = useRef(null)
+
+    function handleSelectorKeyDown(event) {
+        if (event.key === "Escape" && isVisualizerMenuOpen) {
+            event.preventDefault()
+            setIsVisualizerMenuOpen(false)
+            visualizerTriggerRef.current?.focus()
+        }
+    }
+
+    function handleSelectorBlur(event) {
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+            setIsVisualizerMenuOpen(false)
+        }
+    }
 
 
     // ==============================
@@ -205,6 +220,7 @@ function TopBar() {
         )
 
         setIsVisualizerMenuOpen(false)
+        visualizerTriggerRef.current?.focus()
     }
 
 
@@ -278,8 +294,11 @@ function TopBar() {
                 <div
                     ref={visualizerSelectorRef}
                     className="visualizer-selector"
+                    onKeyDown={handleSelectorKeyDown}
+                    onBlur={handleSelectorBlur}
                 >
                     <Button
+                        ref={visualizerTriggerRef}
                         className="visualizer-select"
                         aria-expanded={
                             isVisualizerMenuOpen

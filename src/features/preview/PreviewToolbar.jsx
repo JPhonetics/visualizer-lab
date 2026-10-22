@@ -1,4 +1,5 @@
 import Button from "../../components/ui/Button.jsx"
+import DeviceIcon from "./DeviceIcon.jsx"
 import ZoomControl from "./ZoomControl.jsx"
 
 // ==============================
@@ -145,7 +146,6 @@ function PreviewToolbar({
             {showTitle && (
                 <div
                     className="preview-title-group"
-                    aria-live="polite"
                 >
                     {title && (
                         <strong className="preview-title">
@@ -169,6 +169,14 @@ function PreviewToolbar({
                 VIEW CONTROLS
                 ============================== */}
 
+            {/* Announce device changes independently of continuously measured sizes. */}
+            <span className="screen-reader-only" role="status" aria-atomic="true">
+                {currentDevice.label} preview selected.
+                {currentDevice.width
+                    ? ` Width capped at ${currentDevice.width} CSS pixels.`
+                    : " Width follows available space."}
+            </span>
+
             <div className="panel-controls">
 
                 <Button
@@ -177,7 +185,7 @@ function PreviewToolbar({
                     aria-label={`${currentDevice.label} preview. Click to change device.`}
                     onClick={onDeviceChange}
                 >
-                    {currentDevice.icon}
+                    <DeviceIcon deviceId={currentDevice.id} />
                 </Button>
 
                 <ZoomControl

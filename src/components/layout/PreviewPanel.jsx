@@ -134,8 +134,8 @@ function PreviewPanel({
 
 
     /*
-        useHref() lets React Router build the correct HashRouter
-        URL instead of manually assembling # paths ourselves.
+        useHref() lets React Router build the route URL using the
+        application router.
     */
     const visualizedHref =
         useHref({

@@ -90,25 +90,28 @@ styles because they already use the same variable names.
 :root[data-theme="dark"] {
     color-scheme: dark;
 
-    --color-background: #111827;
+    --color-background: #18191d;
 
-    --color-surface: #1f2937;
-    --color-surface-hover: #273449;
-    --color-surface-active: #374151;
+    --color-surface: #222328;
+    --color-surface-hover: #2b2d33;
+    --color-surface-active: #34373e;
 
-    --color-input: #111827;
+    --color-input: #1c1d22;
 
-    --color-text: #f3f4f6;
-    --color-text-muted: #cbd5e1;
-    --color-text-subtle: #9ca3af;
+    --color-text: #f1f3f2;
+    --color-text-muted: #bec6c3;
+    --color-text-subtle: #a0aaa6;
 
-    --color-border: #4b5563;
-    --color-border-soft: #374151;
+    --color-border: #3c4045;
+    --color-border-soft: #303338;
 
-    --color-focus: #94a3b8;
-    --color-focus-ring: #334155;
+    --color-focus: #53d5b5;
+    --color-focus-ring: #284b43;
 
-    --color-resize: #475569;
+    --color-resize: #459e89;
+    --color-accent: #69d9bb;
+    --color-accent-surface: #263e38;
+
 }
 
 
@@ -149,7 +152,8 @@ body,
    ============================== */
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system,
+        BlinkMacSystemFont, sans-serif;
 
     background-color: var(--color-background);
     color: var(--color-text);

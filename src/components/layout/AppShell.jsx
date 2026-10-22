@@ -8,8 +8,10 @@ import EditorPanel from "./EditorPanel.jsx"
 import PreviewPanel from "./PreviewPanel.jsx"
 import Sidebar from "./Sidebar.jsx"
 import TopBar from "./TopBar.jsx"
-import useLocalStorageState from "../../hooks/useLocalStorageState.js"
 import WorkspaceDivider from "./WorkspaceDivider.jsx"
+
+import useLocalStorageState from "../../hooks/useLocalStorageState.js"
+import keyboardResize from "../../utils/keyboardResize.js"
 
 // ==============================
 // APPLICATION SHELL
@@ -389,6 +391,45 @@ function AppShell() {
                 nextEditorWidth,
                 collapsedPanel,
             )
+    }
+
+
+    function handleSidebarResizeKeyDown(event) {
+        if (!sidebarExpanded || sidebarResizeBoundsRef.current) {
+            return
+        }
+
+        const nextWidth = keyboardResize(event, {
+            value: sidebarWidth,
+            minimum: MINIMUM_SIDEBAR_WIDTH,
+            maximum: MAXIMUM_SIDEBAR_WIDTH,
+            step: 10,
+            increaseKey: "ArrowRight",
+            decreaseKey: "ArrowLeft",
+        })
+
+        if (nextWidth !== null) {
+            setSidebarWidth(nextWidth)
+        }
+    }
+
+    function handleWorkspaceResizeKeyDown(event) {
+        if (collapsedPanel !== null || editorResizeBoundsRef.current) {
+            return
+        }
+
+        const nextWidth = keyboardResize(event, {
+            value: editorWidth,
+            minimum: MINIMUM_EDITOR_WIDTH,
+            maximum: MAXIMUM_EDITOR_WIDTH,
+            step: 5,
+            increaseKey: "ArrowRight",
+            decreaseKey: "ArrowLeft",
+        })
+
+        if (nextWidth !== null) {
+            setEditorWidth(nextWidth)
+        }
     }
 
 
@@ -882,6 +923,10 @@ function AppShell() {
 
                 <Sidebar
                     isExpanded={sidebarExpanded}
+                    width={sidebarWidth}
+                    minimumWidth={MINIMUM_SIDEBAR_WIDTH}
+                    maximumWidth={MAXIMUM_SIDEBAR_WIDTH}
+                    onResizeKeyDown={handleSidebarResizeKeyDown}
                     onResizeStart={
                         handleSidebarResizeStart
                     }
@@ -920,6 +965,10 @@ function AppShell() {
                     ============================== */}
 
                 <WorkspaceDivider
+                    value={editorWidth}
+                    minimum={MINIMUM_EDITOR_WIDTH}
+                    maximum={MAXIMUM_EDITOR_WIDTH}
+                    onKeyDown={handleWorkspaceResizeKeyDown}
                     isDisabled={
                         collapsedPanel !== null
                     }

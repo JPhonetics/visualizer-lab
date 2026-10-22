@@ -47,6 +47,10 @@
 function WorkspaceDivider({
     isDisabled = false,
     onResizeStart,
+    onKeyDown,
+    value,
+    minimum,
+    maximum,
 }) {
 
     // ==============================
@@ -88,6 +92,16 @@ function WorkspaceDivider({
                     ? "workspace-divider-disabled"
                     : ""
             }`}
+            role="separator"
+            aria-label="Editor width"
+            aria-orientation="vertical"
+            aria-valuemin={minimum}
+            aria-valuemax={maximum}
+            aria-valuenow={value}
+            aria-valuetext={`${Math.round(value)}% of editor and preview space`}
+            aria-disabled={isDisabled}
+            tabIndex={isDisabled ? -1 : 0}
+            onKeyDown={onKeyDown}
             title={
                 isDisabled
                     ? undefined

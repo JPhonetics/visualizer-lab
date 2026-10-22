@@ -23,7 +23,7 @@ import "../styles/app-shell.css"
     Current routes:
 
     /
-    -> redirects to the user's last visualizer.
+    -> redirects to the implemented Frontend workspace.
 
     /frontend
     -> Frontend visualizer workspace.
@@ -38,7 +38,7 @@ import "../styles/app-shell.css"
     -> Python visualizer placeholder.
 
     Unknown routes
-    -> return to /, which then resolves the last visualizer.
+    -> return to /, which redirects to Frontend.
 
     Key concepts:
 
@@ -76,7 +76,7 @@ import "../styles/app-shell.css"
     -> lets the user navigate between visualizers.
 
     HomeRedirect.jsx
-    -> restores the most recently selected visualizer.
+    -> opens the implemented Frontend workspace.
 
     Deployment note:
     BrowserRouter requires the production host to send unknown

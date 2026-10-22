@@ -49,8 +49,7 @@ import Button from "../../components/ui/Button.jsx"
 // -> gives us access to the ZoomControl DOM element.
 //
 // useEffect
-// -> synchronizes the editable value with Preview zoom and
-//    temporarily adds browser event listeners while the popup
+// -> temporarily adds browser event listeners while the popup
 //    is open.
 //
 // Used by:
@@ -180,25 +179,8 @@ function ZoomControl({
     const zoomControlRef = useRef(null)
 
 
-    // ==============================
-    // SYNCHRONIZE INPUT WITH ZOOM
-    // ==============================
-
-    // The real zoom value belongs to PreviewPanel.
-    //
-    // Zoom can change without the editable field being used.
-    //
-    // Examples:
-    //
-    // slider movement
-    // Reset to 100
-    // future keyboard shortcut
-    //
-    // Whenever zoom changes, keep zoomInput synchronized.
-
-    useEffect(() => {
-        setZoomInput(String(zoom))
-    }, [zoom])
+    // The idle field derives its display from zoom. Focus starts a fresh
+    // draft, so prop changes do not need an effect or overwrite typing.
 
 
     // ==============================
