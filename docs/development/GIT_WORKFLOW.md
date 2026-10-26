@@ -17,11 +17,11 @@ Fix branches:
 fix/<short-name>
 ```
 
-## Current branch
+## Foundation branches
 
-```text
-feature/app-shell
-```
+`feature/app-shell` preserves the human-validated application-shell checkpoint
+`daefc21`. `feature/testing-foundation` branches from that checkpoint and adds
+tests and CI before merge. Neither branch is merged automatically.
 
 ## Commit style
 

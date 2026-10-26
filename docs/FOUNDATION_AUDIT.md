@@ -102,3 +102,14 @@ foundation is not yet ready for merge or release.
 The user subsequently authorized the application-shell checkpoint and proceeding
 to the dedicated testing-foundation branch. Testing foundation and CI remain
 scheduled work. Release, merge and deployment still require separate approval.
+
+
+## Testing-foundation continuation
+
+The application shell was committed as `daefc21` on feature/app-shell after the
+user's manual review and explicit authorization. The dedicated
+feature/testing-foundation branch now adds Vitest/RTL, Playwright and validation
+CI. Earlier "no test scripts" statements describe the original shell audit.
+See [testing strategy](testing/STRATEGY.md) for implemented coverage, limitations
+and commands. The validation workflow is authored locally; a hosted Actions run
+has not yet been observed. Merge, release and deployment remain unapproved.

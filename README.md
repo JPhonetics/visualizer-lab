@@ -22,9 +22,26 @@ npm run build
 npm run preview
 ```
 
-There is currently no `npm test`, coverage or E2E script. The dedicated testing
-foundation is scheduled next, before major feature development and before merge.
-See the [audit and sequence](docs/FOUNDATION_AUDIT.md) for outstanding blockers.
+## Testing
+
+```bash
+npm test
+npm run test:watch
+npm run test:coverage
+npx playwright install chromium
+npm run test:e2e
+```
+
+Use `npx playwright install --with-deps chromium` on a Linux machine that needs
+browser system libraries. E2E builds the app and starts its own production preview
+on port 4178; that port must be free. Unit/component tests use jsdom; E2E uses real
+Chromium. Coverage HTML is in `coverage/index.html`; browser reports are in
+`playwright-report/index.html`. Generated reports are ignored by Git.
+
+Pull-request CI runs lint, coverage tests and production-build E2E with Node 24.
+The workflow validates only; it does not merge or deploy. See the
+[testing strategy](docs/testing/STRATEGY.md) for coverage boundaries and the
+[audit and sequence](docs/FOUNDATION_AUDIT.md) for remaining gates.
 
 ## Architecture and persistence
 

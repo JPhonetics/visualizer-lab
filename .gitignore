@@ -136,3 +136,6 @@ __pypackages__/
 
 *.temp
 *.tmp
+# Playwright reports and traces
+playwright-report/
+test-results/

@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Testing
+- Add Vitest/React Testing Library regressions and Chromium production-build smoke tests.
+- Add coverage reporting and read-only pull-request validation CI.
+- Update compatible locked development dependencies to resolve setup audit findings.
+
 ### Added
 - React/Vite Frontend workspace shell with resizable and collapsible layout,
   persisted layout preferences, theme control and Frontend selector.
