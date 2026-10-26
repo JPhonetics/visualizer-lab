@@ -113,3 +113,16 @@ CI. Earlier "no test scripts" statements describe the original shell audit.
 See [testing strategy](testing/STRATEGY.md) for implemented coverage, limitations
 and commands. The validation workflow is authored locally; a hosted Actions run
 has not yet been observed. Merge, release and deployment remain unapproved.
+
+
+## Deployment preparation — 2026-10-26
+
+PR #1 was merged by explicit user approval as 5b96ccf; hosted validation passed for
+both the PR and main. The user selected GitHub Pages with clean URLs and subsequently specified the
+owned custom domain visualizerlab.dev. The deployment branch prepares root-base
+assets, BrowserRouter basename,
+static route entries and an app-aware 404. This replaces the original root-only
+redirect shim. See [deployment documentation](development/DEPLOYMENT.md).
+No publication, release, DNS or GitHub Pages settings change has been performed.
+Earlier missing-CI and root-only-hosting notes describe the original audit state.
+Actual-host direct refresh and HTTPS remain pending publication approval.
