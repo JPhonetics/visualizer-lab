@@ -79,8 +79,9 @@ import "../styles/app-shell.css"
     -> opens the implemented Frontend workspace.
 
     Deployment note:
-    BrowserRouter requires the production host to send unknown
-    application routes back to index.html.
+    BrowserRouter uses Vite's base path for project hosting.
+    The Pages build emits static route entry files and an app-aware
+    404.html, keeping direct routes functional without hash URLs.
 
     That lets React Router handle routes such as:
 
@@ -94,7 +95,7 @@ import "../styles/app-shell.css"
 
 function App() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
             <Routes>
 
                 {/* ==============================

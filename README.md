@@ -30,6 +30,7 @@ npm run test:watch
 npm run test:coverage
 npx playwright install chromium
 npm run test:e2e
+npm run test:e2e:pages
 ```
 
 Use `npx playwright install --with-deps chromium` on a Linux machine that needs
@@ -57,6 +58,14 @@ See [architecture](docs/architecture/OVERVIEW.md),
 ## Release and deployment
 
 The package remains at 0.0.0; Frontend Foundation targets 0.1.0 after validation,
-review and approval. No deployment workflow is configured. Existing SPA recovery
-assumes a domain-root host and requires production verification; GitHub project
-subpath hosting needs additional configuration. See [versioning](docs/releases/VERSIONING.md).
+review and approval. GitHub Pages preparation targets the owned custom domain
+`visualizerlab.dev`, including clean `/frontend/` paths, static route entries
+and an app-aware 404. Normal
+local development still uses `/frontend`.
+
+Build with `npm run build:pages`, then `npm run preview:pages` to inspect
+`http://127.0.0.1:4179/`. Publishing is a separate approved manual
+workflow from main, not an automatic result of merging. The site is not yet
+published. See [deployment setup and verification](docs/development/DEPLOYMENT.md),
+[step-by-step owner guide](docs/development/PAGES_SETUP_GUIDE.md),
+and [versioning](docs/releases/VERSIONING.md).

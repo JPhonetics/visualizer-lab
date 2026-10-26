@@ -1,64 +1,71 @@
 # Frontend Foundation — Definition of Done
 
+Evidence updated 2026-10-26: user-reported manual Foundation review, independent
+source review, 27 automated tests, production-build Chromium smoke tests and
+successful hosted PR/main validation. Checked items apply to Foundation scope
+(editor and CSS/JS execution remain placeholders). No release or deployment is
+claimed. Actual-host direct refresh remains pending publication; duplicate/stale
+CSS cleanup has not been claimed as complete.
+
 ## Product behavior
-- [ ] `/frontend` loads correctly.
-- [ ] Frontend is the only available Visualizer.
-- [ ] Visualizer selector behaves as a real dropdown.
-- [ ] Sidebar expand/collapse works.
-- [ ] Sidebar resize works smoothly.
-- [ ] Template resize works smoothly.
-- [ ] Editor/Preview resize works smoothly.
-- [ ] Editor collapse works.
-- [ ] Preview collapse works.
-- [ ] Collapsed rails align with shared header height.
-- [ ] Both Editor and Preview cannot remain collapsed simultaneously.
-- [ ] HTML/CSS/JavaScript folder tabs retain intended appearance.
-- [ ] Preview controls work.
-- [ ] Visualized view works.
-- [ ] Theme works.
-- [ ] persistent layout preferences survive refresh.
-- [ ] transient Preview controls reset as intended.
+- [x] `/frontend` loads correctly.
+- [x] Frontend is the only available Visualizer.
+- [x] Visualizer selector behaves as a real dropdown.
+- [x] Sidebar expand/collapse works.
+- [x] Sidebar resize works smoothly.
+- [x] Template resize works smoothly.
+- [x] Editor/Preview resize works smoothly.
+- [x] Editor collapse works.
+- [x] Preview collapse works.
+- [x] Collapsed rails align with shared header height.
+- [x] Both Editor and Preview cannot remain collapsed simultaneously.
+- [x] HTML/CSS/JavaScript folder tabs retain intended appearance.
+- [x] Preview controls work.
+- [x] Visualized view works.
+- [x] Theme works.
+- [x] persistent layout preferences survive refresh.
+- [x] transient Preview controls reset as intended.
 
 ## Layout / styling
-- [ ] compact header sizing is intentional.
-- [ ] collapsed header lines align.
-- [ ] sidebar typography/control sizing is consistent.
-- [ ] no broad stylesheet regression exists.
-- [ ] Visualized-only styling remains isolated appropriately.
+- [x] compact header sizing is intentional.
+- [x] collapsed header lines align.
+- [x] sidebar typography/control sizing is consistent.
+- [x] no broad stylesheet regression exists.
+- [x] Visualized-only styling remains isolated appropriately.
 - [ ] duplicate/stale CSS is removed when safe.
 
 ## Routing
-- [ ] `/frontend` works.
-- [ ] `/frontend/visualized` works.
-- [ ] browser titles are correct.
+- [x] `/frontend` works.
+- [x] `/frontend/visualized` works.
+- [x] browser titles are correct.
 - [ ] production direct-route refresh is supported.
-- [ ] unknown routes behave intentionally.
+- [x] unknown routes behave intentionally.
 
 ## Engineering
-- [ ] no unnecessary dependencies.
-- [ ] pointer capture remains intact.
-- [ ] requestAnimationFrame resize behavior remains intact.
-- [ ] persistence rules match architecture docs.
-- [ ] comments are accurate.
-- [ ] no major dead/duplicate implementation remains.
+- [x] no unnecessary dependencies.
+- [x] pointer capture remains intact.
+- [x] requestAnimationFrame resize behavior remains intact.
+- [x] persistence rules match architecture docs.
+- [x] comments are accurate.
+- [x] no major dead/duplicate implementation remains.
 
 ## Validation
-- [ ] `npm run lint` passes.
-- [ ] `npm run build` passes.
-- [ ] production output is smoke-tested.
-- [ ] routes are manually checked.
-- [ ] independent review completed.
-- [ ] findings addressed or accepted.
+- [x] `npm run lint` passes.
+- [x] `npm run build` passes.
+- [x] production output is smoke-tested.
+- [x] routes are manually checked.
+- [x] independent review completed.
+- [x] findings addressed or accepted.
 
 ## Testing lifecycle
-- [ ] automated testing foundation exists OR a dedicated next testing branch is explicitly scheduled before major feature work.
-- [ ] critical foundation behavior has meaningful automated coverage once the testing foundation is established.
-- [ ] CI runs validation before merge.
+- [x] automated testing foundation exists OR a dedicated next testing branch is explicitly scheduled before major feature work.
+- [x] critical foundation behavior has meaningful automated coverage once the testing foundation is established.
+- [x] CI runs validation before merge.
 
 ## Version control / release
-- [ ] foundation work is committed on `feature/app-shell`.
-- [ ] commit history is understandable.
-- [ ] human review completed.
-- [ ] changelog updated.
-- [ ] merge only after approval.
-- [ ] release version chosen intentionally.
+- [x] foundation work is committed on `feature/app-shell`.
+- [x] commit history is understandable.
+- [x] human review completed.
+- [x] changelog updated.
+- [x] merge only after approval.
+- [x] release version chosen intentionally.

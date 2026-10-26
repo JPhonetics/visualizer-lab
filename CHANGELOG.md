@@ -7,6 +7,10 @@
 - Add coverage reporting and read-only pull-request validation CI.
 - Update compatible locked development dependencies to resolve setup audit findings.
 
+### Deployment
+- Prepare GitHub Pages hosting on visualizerlab.dev with clean direct-route URLs.
+- Add static route/404 entries, Pages-style browser checks, a custom-domain target guard and manual-only publication workflow.
+
 ### Added
 - React/Vite Frontend workspace shell with resizable and collapsible layout,
   persisted layout preferences, theme control and Frontend selector.

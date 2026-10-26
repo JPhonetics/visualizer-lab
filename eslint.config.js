@@ -7,7 +7,7 @@ import globals from "globals"
 export default defineConfig([
     globalIgnores(["dist", "coverage", "playwright-report", "test-results"]),
     {
-        files: ["**/*.{js,jsx}"],
+        files: ["**/*.{js,jsx,mjs}"],
         extends: [
             js.configs.recommended,
             reactHooks.configs.flat.recommended,
@@ -19,7 +19,7 @@ export default defineConfig([
         },
     },
     {
-        files: ["playwright.config.js"],
+        files: ["playwright*.config.js", "scripts/**/*.mjs"],
         languageOptions: { globals: globals.node },
     },
 ])

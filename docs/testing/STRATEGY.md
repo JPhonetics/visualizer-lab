@@ -116,3 +116,31 @@ No hosted GitHub Actions result has been observed. Nothing is merged or deployed
 
 The workflow setup was checked against the official
 [Playwright CI guide](https://playwright.dev/docs/ci-intro).
+
+
+## Pages preparation — 2026-10-26
+
+The new `npm run test:e2e:pages` builds for the custom-domain root and exercises a
+separate static host on port 4179. It runs three Chromium tests for domain-root/
+workspace entry and refresh, standalone paths/settings/query/fragment retention,
+and a genuine custom 404 response followed by the application redirect. Unlike
+normal E2E's Vite preview, this server does not rewrite unknown paths to index.
+Both E2E commands are part of PR CI. They rebuild dist, so run them sequentially.
+These checks model Pages behavior but do not replace actual-host verification.
+
+The first validation run and post-merge main validation both passed on GitHub:
+[PR run](https://github.com/JPhonetics/visualizer-lab/actions/runs/40371722781),
+[main run](https://github.com/JPhonetics/visualizer-lab/actions/runs/40372438340).
+The earlier "unobserved hosted CI" notes record the initial local-only milestone.
+
+The configured custom domain is visualizerlab.dev, so the build uses `/`, not a
+repository prefix. Deployment target tests accept that hostname at its root and
+reject a default github.io project URL, a wrong path/host or a missing value.
+The workflow obtains this target from configure-pages, not an unchecked user input.
+
+
+Custom-domain correction validation: the target is visualizerlab.dev, confirmed
+with Cloudflare nameservers. Lint, 33 tests, both production builds and all six
+Chromium checks pass. Independent review found no domain-consistency blockers.
+The former .com target is explicitly rejected by a regression test. DNS records,
+repository Pages settings and publication have not been changed.
