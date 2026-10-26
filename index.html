@@ -4,7 +4,54 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>visualizer-lab</title>
+    <title>Visualizer Lab</title>
+    <script>
+        /*
+            GitHub Pages SPA route recovery.
+
+            Example direct visit:
+
+            /frontend
+
+            404.html temporarily converts it to:
+
+            /?/frontend
+
+            This script converts that back to:
+
+            /frontend
+
+            using history.replaceState().
+
+            React Router then sees the clean route normally.
+        */
+        ;(function restoreGitHubPagesRoute(locationObject) {
+            if (
+                locationObject.search.length > 1
+                && locationObject.search[1] === "/"
+            ) {
+                const restoredRoute =
+                    locationObject.search
+                        .slice(1)
+                        .split("&")
+                        .map(
+                            (segment) =>
+                                segment.replace(
+                                    /~and~/g,
+                                    "&",
+                                ),
+                        )
+                        .join("?")
+
+                window.history.replaceState(
+                    null,
+                    "",
+                    restoredRoute
+                    + locationObject.hash,
+                )
+            }
+        })(window.location)
+    </script>
   </head>
   <body>
     <div id="root"></div>

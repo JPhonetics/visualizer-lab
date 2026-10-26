@@ -1,39 +1,183 @@
 /* ==============================
+   VISUALIZER LAB THEME
+   ============================== */
+
+/*
+Summary:
+These CSS custom properties define the shared colors used by
+Visualizer Lab.
+
+A CSS custom property looks like:
+
+--color-background: #ffffff;
+
+Other CSS can reuse it with:
+
+var(--color-background)
+
+Why use variables?
+
+Without variables, a color may be repeated across dozens of
+selectors.
+
+Changing the theme would then require replacing every hardcoded
+color individually.
+
+Instead, components refer to semantic names such as:
+
+background
+surface
+text
+border
+
+Light and Dark mode only need to change the values assigned to
+those names.
+
+See:
+src/features/theme/ThemeControl.jsx
+-> sets data-theme on the <html> element.
+*/
+
+
+/* ==============================
+   LIGHT THEME
+   ============================== */
+
+/*
+:root represents the document's root <html> element.
+
+These values are the default theme.
+*/
+:root {
+    color-scheme: light;
+
+    --color-background: #ffffff;
+
+    --color-surface: #f8fafc;
+    --color-surface-hover: #f1f5f9;
+    --color-surface-active: #e2e8f0;
+
+    --color-input: #ffffff;
+
+    --color-text: #1f2937;
+    --color-text-muted: #6b7280;
+    --color-text-subtle: #9ca3af;
+
+    --color-border: #d1d5db;
+    --color-border-soft: #e5e7eb;
+
+    --color-focus: #64748b;
+    --color-focus-ring: #e2e8f0;
+
+    --color-resize: #cbd5e1;
+}
+
+
+/* ==============================
+   DARK THEME
+   ============================== */
+
+/*
+ThemeControl changes the root element to:
+
+<html data-theme="dark">
+
+That causes this selector to override the Light values above.
+
+The application components do not need separate dark-mode
+styles because they already use the same variable names.
+*/
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --color-background: #18191d;
+
+    --color-surface: #222328;
+    --color-surface-hover: #2b2d33;
+    --color-surface-active: #34373e;
+
+    --color-input: #1c1d22;
+
+    --color-text: #f1f3f2;
+    --color-text-muted: #bec6c3;
+    --color-text-subtle: #a0aaa6;
+
+    --color-border: #3c4045;
+    --color-border-soft: #303338;
+
+    --color-focus: #53d5b5;
+    --color-focus-ring: #284b43;
+
+    --color-resize: #459e89;
+    --color-accent: #69d9bb;
+    --color-accent-surface: #263e38;
+
+}
+
+
+/* ==============================
    PAGE BASE
    ============================== */
 
-/* Apply border-box sizing everywhere so width and height are easier to predict. */
+/*
+border-box makes width/height calculations easier because the
+declared dimensions include:
+
+content
+padding
+border
+*/
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-/* Remove the browser's default page spacing. */
+
+/* ==============================
+   DOCUMENT SIZE
+   ============================== */
+
 html,
 body,
 #root {
-  margin: 0;
-  min-height: 100%;
+    margin: 0;
+
+    min-height: 100%;
 }
 
-/* Set a simple default font and neutral page colors. */
+
+/* ==============================
+   BODY
+   ============================== */
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #ffffff;
-  color: #1f2937;
+    font-family: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system,
+        BlinkMacSystemFont, sans-serif;
+
+    background-color: var(--color-background);
+    color: var(--color-text);
 }
 
-/* Make buttons and form controls use the same font as the page. */
+
+/* ==============================
+   FORM CONTROL FONT
+   ============================== */
+
 button,
 input,
 select,
 textarea {
-  font: inherit;
+    font: inherit;
 }
 
-/* Keep images from overflowing their container. */
+
+/* ==============================
+   IMAGES
+   ============================== */
+
 img {
-  max-width: 100%;
-  display: block;
+    display: block;
+
+    max-width: 100%;
 }

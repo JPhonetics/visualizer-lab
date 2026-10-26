@@ -1,0 +1,118 @@
+# Visualizer Lab — Testing Strategy
+
+## Goal
+
+The repository should become a useful reference for:
+- unit testing
+- React component testing
+- integration testing
+- end-to-end testing
+- regression testing
+
+## Recommended tools
+
+### Unit / component / integration
+- Vitest
+- React Testing Library
+- `@testing-library/jest-dom`
+- `@testing-library/user-event`
+
+### End-to-end
+- Playwright
+
+## Test levels
+
+### Unit tests
+Best for utilities, preview document generation, state helpers, hooks with meaningful logic, and future serialization/export helpers.
+
+### Component tests
+Best for TopBar dropdown, Editor tabs, Preview controls, Theme control, Sidebar interactions, and collapsed panel controls.
+
+### Integration tests
+Best for AppShell layout state, persistence behavior, route-level behavior, and Preview-control interactions.
+
+### End-to-end tests
+Best for critical flows such as loading `/frontend`, collapsing panels, device changes, opening Visualized, refreshing direct routes, and later editing/saving/exporting.
+
+## Regression tests
+
+When fixing a bug:
+1. reproduce it
+2. add a failing test when practical
+3. implement the fix
+4. confirm the test passes
+
+## Coverage
+
+Coverage is a signal, not the goal.
+
+## Initial testing milestone
+
+Before the project becomes a strong reference implementation, establish:
+- Vitest
+- React Testing Library
+- meaningful unit/component tests
+- Playwright
+- at least one E2E smoke path
+- CI running lint/tests/build
+
+
+## Implemented testing foundation
+
+`feature/testing-foundation` starts from the human-validated application-shell
+checkpoint `daefc21`. Its acceptance criteria are meaningful regression tests,
+a reproducible locked installation, passing lint/tests/coverage/build/browser
+smoke checks, and a pull-request validation workflow with no deployment behavior.
+Application components and state ownership do not change in this phase.
+
+- `tests/unit`: keyboard resize keys, bounds and native default prevention.
+- `tests/components`: tab selection/focus/panels, selector dismissal/focus,
+  draft zoom input and prop synchronization, and denied theme storage.
+- `tests/integration`: root/unknown routing with stale stored selection,
+  persistent layout versus transient language/device controls, mutually exclusive
+  collapse state, and malformed/unwritable storage recovery.
+- `tests/e2e`: real Chromium against a fresh production build; Sidebar drag over
+  the iframe with zero intermediate writes and one final write, refresh/collapse,
+  device selection/status, standalone settings transfer and direct routes.
+
+`npm test` runs once and exits; `npm run test:watch` is interactive.
+`npm run test:coverage` reports all source except the application entry point,
+including untested code. It does not count Playwright execution as unit coverage.
+No arbitrary percentage threshold is imposed. Coverage is a guide for future
+regressions, not evidence of complete correctness.
+
+jsdom supplies storage but no real layout. Its ResizeObserver/matchMedia stubs
+only allow component composition; they do not prove measurement, OS-theme events,
+or browser rendering. Browser tests use isolated contexts, actual geometry and
+pointer events. E2E rebuilds and starts its own strict-port preview at 4178;
+it deliberately does not reuse a developer's running server.
+
+Current automated coverage does not include Templates/workspace pointer drags,
+pointer cancellation, system-theme change/listener cleanup, zoom slider/reset,
+Firefox/WebKit, speech output, or visual comparisons. Retain the manual checklist
+for those behaviors. Passing local direct-route tests proves Vite fallback, not
+GitHub Pages 404 recovery or production hosting.
+
+`.github/workflows/validate.yml` runs on pull requests, pushes to main and manual
+dispatch. It uses Node 24, `npm ci`, lint, coverage, Chromium installation and
+E2E (which builds production). Reports/traces are retained for seven days.
+The workflow has read-only contents permission and no release/deploy step.
+A hosted Actions run and required branch protection are still separate checks;
+writing the workflow does not configure GitHub branch protection.
+
+Dependency setup adds only development tools. Compatible updates to locked Vite
+(8.3.5) and source-map-js clear the audit findings discovered during installation;
+application dependency ranges are unchanged. This phase does not add editor,
+Templates, Saved Work, runtime or cloud features.
+
+## Local validation — 2026-10-22
+
+After a fresh `npm ci`: lint passed, all 27 Vitest tests passed, coverage reporting
+passed (55.48% statements/lines), production build passed, and all three Chromium
+E2E tests passed. npm installation/audit reported zero vulnerabilities. Workflow
+YAML parsed locally and diff whitespace checks passed. Independent source review
+found no blockers; the documented coverage gaps remain intentional follow-up work.
+No hosted GitHub Actions result has been observed. Nothing is merged or deployed.
+
+The workflow setup was checked against the official
+[Playwright CI guide](https://playwright.dev/docs/ci-intro).
