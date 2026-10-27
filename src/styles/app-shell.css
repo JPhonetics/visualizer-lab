@@ -1038,11 +1038,6 @@
    EDITOR PLACEHOLDER
    ============================== */
 
-.editor-placeholder {
-    text-transform: capitalize;
-}
-
-
 /* ==============================
    PREVIEW HEADER
    ============================== */
@@ -2052,12 +2047,6 @@
     outline-offset: -2px;
     background-color: var(--color-resize);
 }
-
-/* Author display rules must not expose inactive tab panels. */
-.editor-placeholder[hidden] {
-    display: none;
-}
-
 
 /* Device changes are announced without adding text to the compact toolbar. */
 .screen-reader-only {

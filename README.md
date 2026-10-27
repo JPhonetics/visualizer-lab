@@ -1,13 +1,13 @@
 # Visualizer Lab
 
-A learning-focused React application for exploring code visually. The current
-milestone is Frontend Foundation: a workspace shell with a Sidebar, placeholder
-Editor, isolated sample Preview, layout controls and a standalone Visualized view.
+A learning-focused React application for exploring code visually. Frontend
+Foundation and testing infrastructure are merged. The active editor milestone
+adds CodeMirror editing for HTML, CSS and JavaScript on a feature branch.
 
-Only Frontend is available in the selector. Editing/execution, functional
-Templates, Saved Work and other language visualizers are later roadmap work.
-CSS/JavaScript switches currently update control state; they do not modify the
-sample document.
+Each language keeps its text and undo history while switching tabs or collapsing
+the Editor. Documents are session-only and reset on refresh. Preview still displays
+a sample document: editing and CSS/JavaScript controls do not yet change its output.
+Live Preview, functional Templates, Saved Work and other visualizers are later work.
 
 ## Development
 

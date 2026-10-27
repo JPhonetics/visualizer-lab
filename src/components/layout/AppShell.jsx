@@ -1,6 +1,7 @@
 import {
     useEffect,
     useRef,
+    useState,
 } from "react"
 
 import CollapsedPanelRail from "./CollapsedPanelRail.jsx"
@@ -10,6 +11,7 @@ import Sidebar from "./Sidebar.jsx"
 import TopBar from "./TopBar.jsx"
 import WorkspaceDivider from "./WorkspaceDivider.jsx"
 
+import createEditorSession from "../../features/editor/editorSession.js"
 import useLocalStorageState from "../../hooks/useLocalStorageState.js"
 import keyboardResize from "../../utils/keyboardResize.js"
 
@@ -216,6 +218,9 @@ function createWorkspaceColumns(
 
 
 function AppShell() {
+    // Source documents are session-only and survive EditorPanel unmount/collapse.
+    const [editorSession] = useState(createEditorSession)
+
 
     // ==============================
     // PERSISTENT WORKSPACE STATE
@@ -952,6 +957,7 @@ function AppShell() {
                     )
                     : (
                         <EditorPanel
+                            session={editorSession}
                             onCollapse={
                                 handleEditorCollapse
                             }

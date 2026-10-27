@@ -34,3 +34,19 @@ Status: Accepted
 
 Decision:
 Keep implementation comments useful but concise during active development. Add detailed learning/reference explanations after architecture stabilizes.
+
+
+## ADR-006 — Session-owned CodeMirror documents
+
+Status: Implemented on feature/frontend-editor; checkpoint review pending.
+
+Decision:
+Use CodeMirror 6 with separate immutable states for HTML, CSS and JavaScript.
+AppShell retains those states while EditorPanel views mount/unmount, preserving
+selection and history without shell renders/storage writes per keystroke.
+Tab remains a focus-traversal key. Theme styles inherit the shared shell tokens.
+Load the workspace route lazily so standalone Preview avoids editor dependencies.
+
+Source persistence and editor-to-Preview integration remain later milestones.
+Editor dependencies are state/view/commands/language, HTML/CSS/JavaScript support,
+and Lezer highlighting tags. No execution runtime or React editor wrapper is added.

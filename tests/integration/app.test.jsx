@@ -1,4 +1,4 @@
-import { act, render, renderHook, screen } from "@testing-library/react"
+import { act, render, renderHook, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 
@@ -12,12 +12,13 @@ describe("workspace integration", () => {
         render(<App />)
         await screen.findByRole("tab", { name: "HTML" })
         expect(window.location.pathname).toBe("/frontend")
-        expect(document.title).toBe("Frontend - Visualizer Lab")
+        await waitFor(() => expect(document.title).toBe("Frontend - Visualizer Lab"))
     })
 
     it("persists layout but resets language and Preview controls across mounts", async () => {
         const user = userEvent.setup()
         const first = render(<App />)
+        await screen.findByRole("tab", { name: "HTML" })
         const width = screen.getByRole("separator", { name: "Workspace sidebar width" })
         width.focus()
         await user.keyboard("{End}")
@@ -27,6 +28,7 @@ describe("workspace integration", () => {
         expect(screen.getByRole("status")).toHaveTextContent("Tablet preview selected")
         first.unmount()
         render(<App />)
+        await screen.findByRole("tab", { name: "HTML" })
         expect(screen.getByRole("separator", { name: "Workspace sidebar width" })).toHaveAttribute("aria-valuenow", "360")
         expect(screen.getByRole("tab", { name: "HTML" })).toHaveAttribute("aria-selected", "true")
         expect(screen.getByRole("status")).toHaveTextContent("Desktop preview selected")
@@ -35,6 +37,7 @@ describe("workspace integration", () => {
     it("keeps at least one panel open and disables the divider when collapsed", async () => {
         const user = userEvent.setup()
         render(<App />)
+        await screen.findByRole("tab", { name: "HTML" })
         await user.click(screen.getByRole("button", { name: "Collapse Editor" }))
         expect(screen.queryByRole("tablist")).not.toBeInTheDocument()
         expect(screen.getByRole("separator", { name: "Editor width" })).toHaveAttribute("tabindex", "-1")

@@ -144,3 +144,18 @@ with Cloudflare nameservers. Lint, 33 tests, both production builds and all six
 Chromium checks pass. Independent review found no domain-consistency blockers.
 The former .com target is explicitly rejected by a regression test. DNS records,
 repository Pages settings and publication have not been changed.
+
+
+## Phase 3 editor coverage
+
+State tests cover independent documents/selections, per-language undo/redo and
+fresh sessions. A Chromium test types source, switches languages, exercises undo
+and redo before/after collapse, checks Tab/Shift+Tab exit, verifies no code storage
+or execution and unchanged Preview srcdoc, then refreshes to an empty document.
+Existing Foundation and Pages suites remain enabled. jsdom range geometry stubs
+only support mounting CodeMirror; actual layout/input behavior is browser-tested.
+
+Editor palette regression checks measure actual keyword/string colors across Light,
+Dark and the default System-light appearance, retain document text, and verify
+contrast against both editor and active-line backgrounds. They do not simulate an
+OS appearance change while System mode is active.

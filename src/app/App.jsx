@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react"
 import {
     BrowserRouter,
     Navigate,
@@ -5,12 +6,14 @@ import {
     Routes,
 } from "react-router-dom"
 
-import AppShell from "../components/layout/AppShell.jsx"
 import HomeRedirect from "../pages/HomeRedirect.jsx"
 import VisualizedPage from "../pages/VisualizedPage.jsx"
 import VisualizerPlaceholderPage from "../pages/VisualizerPlaceholderPage.jsx"
 
 import "../styles/app-shell.css"
+
+// Standalone Preview does not need to download the editor workspace.
+const AppShell = lazy(() => import("../components/layout/AppShell.jsx"))
 
 // ==============================
 // APPLICATION
@@ -117,7 +120,9 @@ function App() {
                 <Route
                     path="/frontend"
                     element={
-                        <AppShell />
+                        <Suspense fallback={<main role="status">Loading workspace…</main>}>
+                            <AppShell />
+                        </Suspense>
                     }
                 />
 

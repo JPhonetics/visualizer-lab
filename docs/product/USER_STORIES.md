@@ -34,11 +34,27 @@ Acceptance criteria:
 - Zoom can be changed.
 - Standalone Visualized view can be opened.
 
+## Real Frontend Editor — Phase 3
+
+As a learner, I want to edit independent HTML, CSS and JavaScript documents in the
+workspace, with readable highlighting and predictable keyboard editing.
+
+Acceptance criteria:
+- Each language is editable and correctly named for assistive technology.
+- Text, selection and undo history survive tab changes and Editor collapse.
+- Tab/Shift+Tab can leave the editor without a keyboard trap.
+- Documents remain in memory and reset on refresh; layout persistence is unchanged.
+- Editing does not execute code or update Preview until Phase 4.
+- State/history and real-browser editing have regression coverage.
+
+See [the milestone](../milestones/FRONTEND_EDITOR.md) for scope and review steps.
+
 ## Future stories
 
-### Real editor
+### Live Preview — Phase 4
 
-As a learner, I want to edit HTML, CSS, and JavaScript so I can immediately see how changes affect the rendered page.
+As a learner, I want my edited HTML, CSS and JavaScript to update the isolated
+Preview so I can immediately see the effect of a change.
 
 ### Saved work
 
