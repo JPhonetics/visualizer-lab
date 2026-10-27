@@ -1,4 +1,4 @@
-import { act, render, renderHook, screen } from "@testing-library/react"
+import { act, render, renderHook, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 
@@ -12,7 +12,7 @@ describe("workspace integration", () => {
         render(<App />)
         await screen.findByRole("tab", { name: "HTML" })
         expect(window.location.pathname).toBe("/frontend")
-        expect(document.title).toBe("Frontend - Visualizer Lab")
+        await waitFor(() => expect(document.title).toBe("Frontend - Visualizer Lab"))
     })
 
     it("persists layout but resets language and Preview controls across mounts", async () => {

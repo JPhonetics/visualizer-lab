@@ -90,3 +90,9 @@ backgrounds in both Light and Dark. The user accepted the revised Light palette.
 The user approved committing this editor milestone, pushing the feature branch
 and opening a draft PR for hosted validation. Merge and publication remain separate
 approvals; the deployed foundation has not been replaced with this editor.
+
+
+Hosted CI initially exposed a title assertion racing the lazy workspace's passive
+effect. The integration check now waits for the exact title, and setup clears the
+title between tests to avoid stale-value false positives. No production behavior
+was changed for this test timing correction.
