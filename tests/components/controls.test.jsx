@@ -6,12 +6,13 @@ import { describe, expect, it, vi } from "vitest"
 import EditorPanel from "../../src/components/layout/EditorPanel.jsx"
 import TopBar from "../../src/components/layout/TopBar.jsx"
 import ZoomControl from "../../src/features/preview/ZoomControl.jsx"
+import createEditorSession from "../../src/features/editor/editorSession.js"
 import ThemeControl from "../../src/features/theme/ThemeControl.jsx"
 
 describe("foundation controls", () => {
     it("moves selection/focus through linked editor tabs and wraps", async () => {
         const user = userEvent.setup()
-        render(<EditorPanel onCollapse={() => {}} />)
+        render(<EditorPanel onCollapse={() => {}} session={createEditorSession()} />)
         await user.tab()
         expect(screen.getByRole("tab", { name: "HTML" })).toHaveFocus()
         await user.keyboard("{ArrowLeft}")

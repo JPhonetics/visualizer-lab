@@ -1,5 +1,6 @@
 import { useId, useRef, useState } from "react"
 
+import CodeEditor from "../../features/editor/CodeEditor.jsx"
 import Button from "../ui/Button.jsx"
 import Panel from "./Panel.jsx"
 
@@ -17,8 +18,8 @@ import Panel from "./Panel.jsx"
     CSS
     JavaScript
 
-    CodeMirror will eventually replace the placeholder editor
-    content.
+    CodeMirror renders the active workspace-owned document.
+    Preview wiring is a separate roadmap phase.
 
     EditorPanel does NOT own whether the entire Editor is
     collapsed.
@@ -62,6 +63,7 @@ const LANGUAGES = ["html", "css", "javascript"]
 
 function EditorPanel({
     onCollapse,
+    session,
 }) {
 
     // ==============================
@@ -198,17 +200,21 @@ function EditorPanel({
             header={editorHeader}
             className="editor-panel"
         >
+            <p id="frontend-editor-note" className="editor-stage-note">
+                Edits last until refresh. Preview updates are coming next.
+            </p>
             {LANGUAGES.map((language) => (
                 <div
                     key={language}
                     id={`${tabsId}-${language}-panel`}
-                    className="editor-placeholder"
+                    className="editor-language-panel"
                     role="tabpanel"
                     aria-labelledby={`${tabsId}-${language}-tab`}
                     hidden={activeLanguage !== language}
-                    tabIndex={0}
                 >
-                    {language} Editor
+                    {activeLanguage === language && (
+                        <CodeEditor language={language} session={session} />
+                    )}
                 </div>
             ))}
         </Panel>

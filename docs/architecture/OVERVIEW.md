@@ -19,6 +19,7 @@ src/
 │   ├── layout/
 │   └── ui/
 ├── features/
+│   ├── editor/
 │   ├── preview/
 │   └── theme/
 ├── hooks/
@@ -58,6 +59,18 @@ App
         ├── WorkspaceDivider
         └── PreviewPanel or collapsed Preview rail
 ```
+
+## Editor architecture
+
+AppShell owns a session with one immutable CodeMirror EditorState per language.
+EditorPanel owns the transient selected tab. CodeEditor creates a view for that
+language and retains each transaction's state in the session; cleanup destroys
+only the view. Text, selection and undo history survive panel/tab unmounting.
+No keystroke updates React shell state or localStorage. Refresh/route unmount ends
+the workspace session. Preview remains independently composed and unchanged.
+
+The workspace route is loaded lazily, so standalone Visualized does not fetch the
+CodeMirror workspace bundle. Editor CSS follows the existing theme variables.
 
 ## Preview architecture
 

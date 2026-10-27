@@ -1,0 +1,88 @@
+/* Editor-only layout and syntax colors; shell geometry stays in app-shell.css. */
+.editor-panel .panel-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.editor-stage-note {
+    flex-shrink: 0;
+    margin: 0;
+    padding: 7px 12px;
+    color: var(--color-text-muted);
+    font-size: 12px;
+    border-bottom: 1px solid var(--color-border-soft);
+}
+
+.editor-language-panel {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+}
+
+.editor-language-panel[hidden] {
+    display: none;
+}
+
+/* Keep document length out of the shell's intrinsic height calculation. */
+.code-editor {
+    position: absolute;
+    inset: 0;
+    --editor-keyword: #005cc5;
+    --editor-string: #a31515;
+    --editor-number: #915500;
+    --editor-tag: #075ca8;
+    --editor-attribute: #7650a8;
+}
+
+:root[data-theme="dark"] .code-editor {
+    --editor-keyword: #d3a7e8;
+    --editor-string: #9bddb3;
+    --editor-number: #e4ba79;
+    --editor-tag: #83c6eb;
+    --editor-attribute: #c2b9e9;
+}
+
+.code-editor .cm-editor {
+    height: 100%;
+    color: var(--color-text);
+    background: var(--color-background);
+    font-size: 14px;
+}
+
+.code-editor .cm-editor.cm-focused {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -2px;
+}
+
+.code-editor .cm-scroller {
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    overflow: auto;
+}
+
+.code-editor .cm-content {
+    padding: 12px 0;
+    caret-color: var(--color-text);
+}
+
+.code-editor .cm-gutters {
+    color: var(--color-text-muted);
+    background: var(--color-surface);
+    border-right: 1px solid var(--color-border-soft);
+}
+
+.code-editor .cm-activeLine,
+.code-editor .cm-activeLineGutter {
+    background: var(--color-surface-hover);
+}
+
+.code-editor .cm-editor .cm-selectionBackground {
+    background: var(--color-surface-active);
+}
+
+.code-editor .cm-cursor {
+    border-left-color: var(--color-text);
+}

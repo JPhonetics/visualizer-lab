@@ -12,6 +12,9 @@
 - Add static route/404 entries, Pages-style browser checks, a custom-domain target guard and manual-only publication workflow.
 
 ### Added
+- Editable CodeMirror HTML, CSS and JavaScript documents with separate session undo/selection state.
+- Editor state survives tab changes and collapse without source persistence or Preview execution.
+- Load the editor workspace separately from standalone Preview.
 - React/Vite Frontend workspace shell with resizable and collapsible layout,
   persisted layout preferences, theme control and Frontend selector.
 - Modular sample Preview with viewport, zoom, reload and standalone Visualized view.
@@ -22,6 +25,7 @@
 - Replace device emoji with consistent monitor, tablet and phone outline icons.
 
 ### Fixed
+- Use distinct blue keywords and red strings in the Light editor palette, with theme/contrast browser regression checks.
 - Announce Preview device selections through a dedicated screen-reader status.
 - Add keyboard resizing and accessible separator values for layout controls.
 - Complete Editor tab navigation/panel relationships and selector Escape dismissal.
