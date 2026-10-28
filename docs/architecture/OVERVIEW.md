@@ -67,7 +67,8 @@ EditorPanel owns the transient selected tab. CodeEditor creates a view for that
 language and retains each transaction's state in the session; cleanup destroys
 only the view. Text, selection and undo history survive panel/tab unmounting.
 No keystroke updates React shell state or localStorage. Refresh/route unmount ends
-the workspace session. Preview remains independently composed and unchanged.
+the workspace session. Preview subscribes to cached text snapshots independently
+through useSyncExternalStore; selection-only transactions do not notify it.
 
 The workspace route is loaded lazily, so standalone Visualized does not fetch the
 CodeMirror workspace bundle. Editor CSS follows the existing theme variables.
@@ -83,7 +84,21 @@ PreviewPanel
 └── usePreviewSize
 ```
 
-`previewDocument.js` will eventually evolve to combine real editor content.
+`useDebouncedSources` delays document updates by 200ms; Reload flushes the latest
+source immediately. `previewDocument.js` parses HTML in a detached document,
+then adds the enabled CSS and JavaScript editor layers. PreviewFrame uses an
+opaque-origin sandbox (allow-scripts only when enabled, never allow-same-origin).
+Changing JS permission remounts the frame to stop previously running scripts.
+
+AppShell owns the in-memory standalone snapshot registry. A UUID in the URL
+identifies a BroadcastChannel handoff; source never enters URLs or browser storage.
+A standalone tab receives a fixed copy, then closes its channel. Registry channels
+remain until workspace unmount so refresh can retrieve the original copy. A loaded
+standalone tab survives workspace closure, but refreshing it then reports the
+snapshot unavailable. Missing/blocked messaging is handled explicitly.
+
+This is an execution boundary, not a resource limiter: arbitrary user scripts can
+still loop or make network requests within browser sandbox permissions.
 
 ## Resize architecture
 

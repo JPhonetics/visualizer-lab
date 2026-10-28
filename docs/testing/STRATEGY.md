@@ -159,3 +159,20 @@ Editor palette regression checks measure actual keyword/string colors across Lig
 Dark and the default System-light appearance, retain document text, and verify
 contrast against both editor and active-line backgrounds. They do not simulate an
 OS appearance change while System mode is active.
+
+## Phase 4 Live Preview coverage
+
+Document assembly tests cover full HTML/fragments, enabled layers and closing-tag
+handling. Session tests prove cached text-only notifications; hook tests cover
+200ms debounce, Reload flush and timer cleanup. Snapshot tests cover immutable
+handoff, malformed responses, timeout, unsupported/blocked browser APIs and cleanup.
+A component regression checks the accessible standalone failure message.
+
+Chromium exercises real HTML/CSS/JS output, inline handlers, script toggle remount,
+Reload, denied parent DOM access, standalone snapshot independence, refresh with
+collapsed Preview, and unavailable refresh after workspace closure. Existing
+editor/history/resize/theme and clean Pages route suites still run.
+
+Human usability and screen-reader review follow
+[the Live Preview checklist](../milestones/LIVE_PREVIEW.md). Arbitrary user scripts
+are not resource-limited; this milestone adds no execution worker or network policy.

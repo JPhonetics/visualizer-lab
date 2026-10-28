@@ -66,6 +66,7 @@ import PreviewFrame from "./PreviewFrame.jsx"
 
 function PreviewViewport({
     currentDevice,
+    isJsEnabled = true,
     documentContent,
     previewReloadKey,
     previewViewportRef,
@@ -190,7 +191,8 @@ function PreviewViewport({
                             creates a new iframe.
                         */}
                         <PreviewFrame
-                            key={previewReloadKey}
+                            key={`${previewReloadKey}-${isJsEnabled}`}
+                            isJsEnabled={isJsEnabled}
                             documentContent={
                                 documentContent
                             }

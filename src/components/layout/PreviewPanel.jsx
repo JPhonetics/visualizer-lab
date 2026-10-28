@@ -1,9 +1,11 @@
+import { useMemo, useState, useSyncExternalStore } from "react"
 import { useHref } from "react-router-dom"
 
 import Panel from "./Panel.jsx"
-import PREVIEW_DOCUMENT from "../../features/preview/previewDocument.js"
+import createPreviewDocument from "../../features/preview/previewDocument.js"
 import PreviewToolbar from "../../features/preview/PreviewToolbar.jsx"
 import PreviewViewport from "../../features/preview/PreviewViewport.jsx"
+import useDebouncedSources from "../../features/preview/useDebouncedSources.js"
 import usePreviewControls from "../../features/preview/usePreviewControls.js"
 import usePreviewSize from "../../features/preview/usePreviewSize.js"
 
@@ -71,6 +73,8 @@ import usePreviewSize from "../../features/preview/usePreviewSize.js"
 
 function PreviewPanel({
     onCollapse,
+    editorSession,
+    snapshots,
 }) {
 
     // ==============================
@@ -89,6 +93,20 @@ function PreviewPanel({
         setZoom,
         zoom,
     } = usePreviewControls()
+
+
+    const [standaloneError, setStandaloneError] = useState("")
+    const sources = useSyncExternalStore(editorSession.subscribe, editorSession.getSnapshot)
+    const [debouncedSources, flushSources] = useDebouncedSources(sources)
+    const documentContent = useMemo(() => createPreviewDocument(debouncedSources, {
+        isCssEnabled,
+        isJsEnabled,
+    }), [debouncedSources, isCssEnabled, isJsEnabled])
+
+    function handleReload() {
+        flushSources()
+        handlePreviewReload()
+    }
 
 
     // ==============================
@@ -164,11 +182,20 @@ function PreviewPanel({
             The new tab is still the same Visualizer Lab app; it
             simply starts at the Visualized route.
         */
-        window.open(
-            visualizedHref,
-            "_blank",
-            "noopener,noreferrer",
-        )
+        const snapshotId = snapshots.create(editorSession.getSnapshot())
+        if (!snapshotId) {
+            setStandaloneError("Standalone Preview is unavailable in this browser. You can still use workspace Preview.")
+            return
+        }
+        setStandaloneError("")
+        const url = new URL(visualizedHref, window.location.href)
+        url.searchParams.set("snapshot", snapshotId)
+        try {
+            window.open(url.href, "_blank", "noopener,noreferrer")
+        } catch {
+            snapshots.release(snapshotId)
+            setStandaloneError("Standalone Preview could not open. You can still use workspace Preview.")
+        }
     }
 
 
@@ -186,7 +213,7 @@ function PreviewPanel({
             onDeviceChange={handleDeviceChange}
             onJsToggle={handleJsToggle}
             onOpenNewTab={handleOpenNewTab}
-            onReload={handlePreviewReload}
+            onReload={handleReload}
             onZoomChange={setZoom}
             previewSize={previewSize}
             zoom={zoom}
@@ -201,8 +228,9 @@ function PreviewPanel({
         >
             <PreviewViewport
                 currentDevice={currentDevice}
+                isJsEnabled={isJsEnabled}
                 documentContent={
-                    PREVIEW_DOCUMENT
+                    documentContent
                 }
                 previewReloadKey={
                     previewReloadKey
@@ -212,6 +240,7 @@ function PreviewPanel({
                 }
                 zoom={zoom}
             />
+            {standaloneError && <p className="preview-source-error" role="alert">{standaloneError}</p>}
         </Panel>
     )
 }

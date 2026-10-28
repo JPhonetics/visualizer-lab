@@ -49,12 +49,15 @@ Acceptance criteria:
 
 See [the milestone](../milestones/FRONTEND_EDITOR.md) for scope and review steps.
 
-## Future stories
-
-### Live Preview — Phase 4
+## Live Preview — Phase 4
 
 As a learner, I want my edited HTML, CSS and JavaScript to update the isolated
 Preview so I can immediately see the effect of a change.
+
+Acceptance criteria and the exact human checklist are maintained in
+[Live Preview](../milestones/LIVE_PREVIEW.md).
+
+## Future stories
 
 ### Saved work
 

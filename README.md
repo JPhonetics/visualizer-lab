@@ -1,13 +1,15 @@
 # Visualizer Lab
 
-A learning-focused React application for exploring code visually. Frontend
-Foundation and testing infrastructure are merged. The active editor milestone
-adds CodeMirror editing for HTML, CSS and JavaScript on a feature branch.
+A learning-focused React application for exploring code visually. Foundation,
+testing and the real Frontend editor are merged. Live Preview is the active milestone.
 
 Each language keeps its text and undo history while switching tabs or collapsing
-the Editor. Documents are session-only and reset on refresh. Preview still displays
-a sample document: editing and CSS/JavaScript controls do not yet change its output.
-Live Preview, functional Templates, Saved Work and other visualizers are later work.
+the Editor. Documents are session-only and reset on refresh. Preview now renders
+HTML, CSS and JavaScript after a short pause, with CSS/JS switches and Reload.
+Standalone Preview receives a fixed in-memory snapshot. Functional Templates,
+Saved Work and other visualizers remain later work.
+
+See [Live Preview acceptance and browser review](docs/milestones/LIVE_PREVIEW.md).
 
 ## Development
 
@@ -65,7 +67,7 @@ local development still uses `/frontend`.
 
 Build with `npm run build:pages`, then `npm run preview:pages` to inspect
 `http://127.0.0.1:4179/`. Publishing is a separate approved manual
-workflow from main, not an automatic result of merging. The site is not yet
-published. See [deployment setup and verification](docs/development/DEPLOYMENT.md),
+workflow from main, not an automatic result of merging. The Foundation site has been published; editor and Live Preview changes require
+a separately approved deployment. HTTPS provisioning still needs production sign-off. See [deployment setup and verification](docs/development/DEPLOYMENT.md),
 [step-by-step owner guide](docs/development/PAGES_SETUP_GUIDE.md),
 and [versioning](docs/releases/VERSIONING.md).

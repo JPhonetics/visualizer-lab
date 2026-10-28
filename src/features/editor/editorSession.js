@@ -48,12 +48,28 @@ export default function createEditorSession() {
         }),
     ]))
 
+    let snapshot = { html: "", css: "", javascript: "" }
+    const listeners = new Set()
+
     return {
+        getSnapshot: () => snapshot,
+        subscribe(listener) {
+            listeners.add(listener)
+            return () => listeners.delete(listener)
+        },
         getState(language) {
             return states.get(language)
         },
         setState(language, state) {
+            const previous = states.get(language)
             states.set(language, state)
+            // Selection/history transactions still belong to the editor, but
+            // only changed text should notify Preview subscribers.
+            if (previous.doc === state.doc) return
+            const text = state.doc.toString()
+            if (snapshot[language] === text) return
+            snapshot = { ...snapshot, [language]: text }
+            for (const listener of listeners) listener()
         },
     }
 }

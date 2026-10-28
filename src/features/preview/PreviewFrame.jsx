@@ -4,7 +4,7 @@
 
 // Summary:
 // PreviewFrame is the isolated browser environment where the
-// user's HTML, CSS, and JavaScript will eventually run.
+// user's HTML, CSS, and JavaScript run.
 //
 // It uses an HTML <iframe> rather than rendering user code
 // directly inside the Visualizer Lab React application.
@@ -40,22 +40,19 @@
 // -> chooses device size.
 // -> applies Preview zoom.
 //
-// Future:
-// The documentContent prop will eventually be generated from:
-//
-// HTML editor
-// CSS editor
-// JavaScript editor
+// Document content is assembled by previewDocument.js from editor sources.
+// Never add allow-same-origin: user scripts must not access the parent app.
 
 
 function PreviewFrame({
     documentContent,
+    isJsEnabled = true,
 }) {
     return (
         <iframe
             className="preview-frame"
             title="Visualizer Lab Preview"
-            sandbox="allow-scripts"
+            sandbox={isJsEnabled ? "allow-scripts" : ""}
             srcDoc={documentContent}
         />
     )
