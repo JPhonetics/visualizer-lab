@@ -1,14 +1,17 @@
 import {
     useEffect,
+    useMemo,
     useState,
 } from "react"
 import { useSearchParams } from "react-router-dom"
 
-import PREVIEW_DOCUMENT from "../features/preview/previewDocument.js"
+import createPreviewDocument from "../features/preview/previewDocument.js"
 import PreviewToolbar from "../features/preview/PreviewToolbar.jsx"
 import PreviewViewport from "../features/preview/PreviewViewport.jsx"
 import usePreviewControls from "../features/preview/usePreviewControls.js"
 import usePreviewSize from "../features/preview/usePreviewSize.js"
+
+import useVisualizedSources from "../features/preview/useVisualizedSources.js"
 
 import "../styles/visualized-page.css"
 
@@ -144,6 +147,13 @@ function VisualizedPage() {
     })
 
 
+    const snapshot = useVisualizedSources(searchParams.get("snapshot"))
+    const documentContent = useMemo(() => createPreviewDocument(snapshot.sources ?? {}, {
+        isCssEnabled,
+        isJsEnabled,
+    }), [snapshot.sources, isCssEnabled, isJsEnabled])
+
+
     // ==============================
     // LIVE PREVIEW SIZE
     // ==============================
@@ -184,10 +194,19 @@ function VisualizedPage() {
                 ============================== */}
 
             <div className="visualized-preview-area">
+                {snapshot.status === "empty" && (
+                    <p className="visualized-source-note">Open this view from the workspace to preview your code.</p>
+                )}
+                {snapshot.status === "unavailable" && (
+                    <p className="visualized-source-note" role="alert">
+                        This preview snapshot is unavailable. Reopen it from the workspace.
+                    </p>
+                )}
                 <PreviewViewport
                     currentDevice={currentDevice}
+                    isJsEnabled={isJsEnabled}
                     documentContent={
-                        PREVIEW_DOCUMENT
+                        documentContent
                     }
                     previewReloadKey={
                         previewReloadKey

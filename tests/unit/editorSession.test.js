@@ -38,3 +38,21 @@ describe("per-language history", () => {
         expect(createEditorSession().getState("javascript").doc.toString()).toBe("")
     })
 })
+
+it("publishes cached source snapshots only for changed text and cleans subscriptions", () => {
+    const session = createEditorSession()
+    const snapshots = []
+    const unsubscribe = session.subscribe(() => snapshots.push(session.getSnapshot()))
+    const empty = session.getSnapshot()
+    expect(session.getSnapshot()).toBe(empty)
+    session.setState("html", session.getState("html").update({ changes: { from: 0, insert: "hello" } }).state)
+    const updated = session.getSnapshot()
+    expect(updated).toEqual({ html: "hello", css: "", javascript: "" })
+    expect(snapshots).toHaveLength(1)
+    session.setState("html", session.getState("html").update({ selection: { anchor: 1 } }).state)
+    expect(session.getSnapshot()).toBe(updated)
+    expect(snapshots).toHaveLength(1)
+    unsubscribe()
+    session.setState("css", session.getState("css").update({ changes: { from: 0, insert: "p {}" } }).state)
+    expect(snapshots).toHaveLength(1)
+})

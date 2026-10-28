@@ -109,6 +109,7 @@ function PreviewToolbar({
                             ? "active"
                             : ""
                     }`}
+                    title="Toggle the CSS editor stylesheet (HTML inline styles remain)"
                     aria-pressed={isCssEnabled}
                     onClick={onCssToggle}
                 >
@@ -121,6 +122,7 @@ function PreviewToolbar({
                             ? "active"
                             : ""
                     }`}
+                    title="Toggle all Preview scripts"
                     aria-pressed={isJsEnabled}
                     onClick={onJsToggle}
                 >

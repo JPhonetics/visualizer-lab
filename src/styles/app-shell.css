@@ -2071,3 +2071,21 @@
 :root[data-theme="dark"] .workspace-divider {
     border-color: var(--color-border-soft);
 }
+
+
+.preview-panel .panel-content {
+    position: relative;
+}
+
+.preview-source-error {
+    position: absolute;
+    z-index: 1;
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    margin: 0;
+    padding: 12px;
+    border-radius: 6px;
+    color: var(--color-text);
+    background: var(--color-surface);
+}

@@ -1,19 +1,18 @@
 import { expect, test } from "@playwright/test"
 
-test("editing retains language buffers, history and collapse state without executing Preview", async ({ page }) => {
+test("editing retains language buffers, history and collapse state without leaking source execution into the app", async ({ page }) => {
     const errors = []
     const dialogs = []
     page.on("pageerror", (error) => errors.push(error.message))
     page.on("dialog", async (dialog) => { dialogs.push(dialog.message()); await dialog.dismiss() })
     await page.goto("/frontend")
     const redoShortcut = await page.evaluate(() => /Mac/.test(navigator.platform) ? "Meta+Shift+z" : "Control+y")
-    const previewBefore = await page.locator(".preview-frame").getAttribute("srcdoc")
     const html = page.getByRole("textbox", { name: "HTML code editor" })
     await html.pressSequentially("<h1>My editable page")
     await page.getByRole("tab", { name: "CSS", exact: true }).click()
     await page.getByRole("textbox", { name: "CSS code editor" }).fill("h1 { color: green; }")
     await page.getByRole("tab", { name: "JavaScript", exact: true }).click()
-    await page.getByRole("textbox", { name: "JavaScript code editor" }).fill("alert('must not execute')")
+    await page.getByRole("textbox", { name: "JavaScript code editor" }).fill("window.editorExample = \"frame only\"")
     await page.getByRole("tab", { name: "HTML", exact: true }).click()
     await expect(html).toHaveText("<h1>My editable page</h1>")
     await html.focus()
@@ -51,10 +50,11 @@ test("editing retains language buffers, history and collapse state without execu
     await expect(css).not.toBeFocused()
     await page.keyboard.press("Shift+Tab")
     await expect(css).toBeFocused()
-    expect(await page.locator(".preview-frame").getAttribute("srcdoc")).toBe(previewBefore)
+    await expect(page.locator(".preview-frame")).toHaveAttribute("srcdoc", /My editable page/)
+    expect(await page.evaluate(() => window.editorExample)).toBeUndefined()
     const stored = await page.evaluate(() => Object.values(localStorage).join(" "))
     expect(stored).not.toContain("editable page")
-    expect(stored).not.toContain("must not execute")
+    expect(stored).not.toContain("frame only")
     expect(dialogs).toEqual([])
     await page.reload()
     await expect(page.getByRole("textbox", { name: "HTML code editor" })).toHaveText("")

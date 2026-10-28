@@ -50,3 +50,19 @@ Load the workspace route lazily so standalone Preview avoids editor dependencies
 Source persistence and editor-to-Preview integration remain later milestones.
 Editor dependencies are state/view/commands/language, HTML/CSS/JavaScript support,
 and Lezer highlighting tags. No execution runtime or React editor wrapper is added.
+
+## Phase 4 — Live Preview and standalone snapshots
+
+Subscribe to cached editor text snapshots at PreviewPanel, debounce assembly by
+200ms, and flush pending source on Reload. This avoids React shell renders per
+keystroke and preserves the existing drag/persistence boundaries.
+
+Use detached DOMParser assembly and iframe srcDoc. Allow scripts only when enabled;
+never combine script permission with allow-same-origin. Remount on JS permission
+changes so disabling scripts also stops prior frame execution.
+
+Standalone Preview receives an immutable in-memory snapshot through a random UUID
+BroadcastChannel. Keep source out of query strings and browser storage, preserve
+noopener, and retain registry channels until workspace unmount to support refresh.
+This is temporary tab handoff, not a Saved Work or portable sharing implementation.
+Missing browser support or a closed workspace produces explicit feedback.

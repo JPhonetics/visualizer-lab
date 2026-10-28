@@ -1,7 +1,7 @@
 # Visualizer Lab — Roadmap
 
-Active work: Phase 3 Real Frontend Editor on feature/frontend-editor. Foundation,
-testing and Pages preparation are merged; Pages publication succeeded, while
+Active work: Phase 4 Live Preview on feature/live-preview. Foundation,
+testing, Pages preparation and the Phase 3 editor are merged; Pages publication succeeded, while
 certificate provisioning/HTTPS production sign-off remains an open external task.
 
 ## Phase 1 — Frontend Foundation

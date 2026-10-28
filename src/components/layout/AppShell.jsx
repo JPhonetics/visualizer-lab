@@ -11,6 +11,7 @@ import Sidebar from "./Sidebar.jsx"
 import TopBar from "./TopBar.jsx"
 import WorkspaceDivider from "./WorkspaceDivider.jsx"
 
+import usePreviewSnapshots from "../../features/preview/usePreviewSnapshots.js"
 import createEditorSession from "../../features/editor/editorSession.js"
 import useLocalStorageState from "../../hooks/useLocalStorageState.js"
 import keyboardResize from "../../utils/keyboardResize.js"
@@ -220,6 +221,7 @@ function createWorkspaceColumns(
 function AppShell() {
     // Source documents are session-only and survive EditorPanel unmount/collapse.
     const [editorSession] = useState(createEditorSession)
+    const previewSnapshots = usePreviewSnapshots()
 
 
     // ==============================
@@ -1000,6 +1002,8 @@ function AppShell() {
                     )
                     : (
                         <PreviewPanel
+                            editorSession={editorSession}
+                            snapshots={previewSnapshots}
                             onCollapse={
                                 handlePreviewCollapse
                             }

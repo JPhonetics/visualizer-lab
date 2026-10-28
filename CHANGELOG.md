@@ -12,12 +12,14 @@
 - Add static route/404 entries, Pages-style browser checks, a custom-domain target guard and manual-only publication workflow.
 
 ### Added
+- Live HTML/CSS/JavaScript Preview with debounced updates, immediate Reload and sandboxed script execution.
+- Standalone in-memory snapshots with explicit unavailable feedback and no source in URLs/storage.
 - Editable CodeMirror HTML, CSS and JavaScript documents with separate session undo/selection state.
-- Editor state survives tab changes and collapse without source persistence or Preview execution.
+- Editor state survives tab changes and collapse without source persistence.
 - Load the editor workspace separately from standalone Preview.
 - React/Vite Frontend workspace shell with resizable and collapsible layout,
   persisted layout preferences, theme control and Frontend selector.
-- Modular sample Preview with viewport, zoom, reload and standalone Visualized view.
+- Modular Preview with viewport, zoom, reload and standalone Visualized view.
 
 ### Changed
 - Use native system interface typography, preferring Segoe UI on Windows.
