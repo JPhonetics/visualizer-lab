@@ -201,7 +201,7 @@ function EditorPanel({
             className="editor-panel"
         >
             <p id="frontend-editor-note" className="editor-stage-note">
-                Edits last until refresh. Preview updates after a short pause.
+                Current Work saves locally. Preview updates after a short pause.
             </p>
             {LANGUAGES.map((language) => (
                 <div

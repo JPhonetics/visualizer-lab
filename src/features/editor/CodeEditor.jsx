@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react"
 import "./editor.css"
 
 // React owns the mount point; CodeMirror owns its DOM and transactions. Every
-// transaction is retained in the workspace session without a React/storage write.
+// transaction is retained in the session. The project controller batches source
+// persistence separately; selection-only transactions do not schedule saves.
 function CodeEditor({ language, session }) {
     const containerRef = useRef(null)
 

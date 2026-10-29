@@ -176,3 +176,30 @@ editor/history/resize/theme and clean Pages route suites still run.
 Human usability and screen-reader review follow
 [the Live Preview checklist](../milestones/LIVE_PREVIEW.md). Arbitrary user scripts
 are not resource-limited; this milestone adds no execution worker or network policy.
+
+## Phase 5 local projects
+
+Schema/controller tests cover bounded validation, text-only debounce, lifecycle
+flush, restoring all languages, immutable copies, fresh sessions, rename/delete,
+failed writes/retry, corrupt/future/denied storage, and observed tab conflicts.
+Browser tests cover actual page refresh and rendering, confirmations/cancellation,
+search, naming/deletion, fresh undo history and multiple workspace tabs. Previous
+editor tests now assert persisted source; standalone snapshot tests distinguish
+project storage from temporary handoff. Existing layout/theme/Pages checks remain.
+
+Human acceptance follows [Local Projects](../milestones/LOCAL_PROJECTS.md).
+
+Local Projects revisions add coverage for inline rename/Escape, restoring a saved
+link, explicit in-place updates, deletion detachment, and older drafts without a
+link. Pointer-drag browser checks select the first line in all three languages
+in Light/Dark and assert a visible selection layer with translucent active-line
+paint; screenshots preserve the result for visual inspection.
+
+Further project controls exercise Save on unlinked and linked drafts, named Save As
+and cancellation, double-click/keyboard name activation, and independent persistent
+draft/saved edit timestamps.
+
+Reorder tests cover persisted array positions, unchanged source identity/timestamps,
+invalid IDs, failed writes, native browser drag and keyboard movement, filtered
+numbering and search exclusion. A 25-project browser fixture verifies overflow,
+last-row reachability and Templates pointer resizing and refresh persistence.

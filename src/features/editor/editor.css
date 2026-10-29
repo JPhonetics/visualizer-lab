@@ -31,6 +31,8 @@
 .code-editor {
     position: absolute;
     inset: 0;
+    --editor-selection: #b4d5ff;
+    --editor-selection-inactive: #d4e2f5;
     --editor-keyword: #005cc5;
     --editor-string: #a31515;
     --editor-number: #915500;
@@ -39,6 +41,8 @@
 }
 
 :root[data-theme="dark"] .code-editor {
+    --editor-selection: #365c85;
+    --editor-selection-inactive: #334657;
     --editor-keyword: #d3a7e8;
     --editor-string: #9bddb3;
     --editor-number: #e4ba79;
@@ -74,13 +78,21 @@
     border-right: 1px solid var(--color-border-soft);
 }
 
-.code-editor .cm-activeLine,
+/* Selection is painted below text: opaque active-line paint would hide it. */
+.code-editor .cm-activeLine {
+    background: rgb(100 150 180 / 8%);
+}
+
 .code-editor .cm-activeLineGutter {
     background: var(--color-surface-hover);
 }
 
-.code-editor .cm-editor .cm-selectionBackground {
-    background: var(--color-surface-active);
+.code-editor .cm-editor > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+    background: var(--editor-selection-inactive);
+}
+
+.code-editor .cm-editor.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground {
+    background: var(--editor-selection);
 }
 
 .code-editor .cm-cursor {

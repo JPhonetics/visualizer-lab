@@ -172,7 +172,7 @@ function PreviewToolbar({
                 ============================== */}
 
             {/* Announce device changes independently of continuously measured sizes. */}
-            <span className="screen-reader-only" role="status" aria-atomic="true">
+            <span className="screen-reader-only" role="status" aria-label="Preview device" aria-atomic="true">
                 {currentDevice.label} preview selected.
                 {currentDevice.width
                     ? ` Width capped at ${currentDevice.width} CSS pixels.`

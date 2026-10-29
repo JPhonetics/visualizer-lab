@@ -2,6 +2,7 @@ import {
     useEffect,
     useRef,
     useState,
+    useSyncExternalStore,
 } from "react"
 
 import CollapsedPanelRail from "./CollapsedPanelRail.jsx"
@@ -12,7 +13,7 @@ import TopBar from "./TopBar.jsx"
 import WorkspaceDivider from "./WorkspaceDivider.jsx"
 
 import usePreviewSnapshots from "../../features/preview/usePreviewSnapshots.js"
-import createEditorSession from "../../features/editor/editorSession.js"
+import createProjectWorkspace from "../../features/projects/projectWorkspace.js"
 import useLocalStorageState from "../../hooks/useLocalStorageState.js"
 import keyboardResize from "../../utils/keyboardResize.js"
 
@@ -219,8 +220,10 @@ function createWorkspaceColumns(
 
 
 function AppShell() {
-    // Source documents are session-only and survive EditorPanel unmount/collapse.
-    const [editorSession] = useState(createEditorSession)
+    // Project ownership outlives Sidebar/Editor collapse; source changes notify Preview.
+    const [projects] = useState(createProjectWorkspace)
+    const editorSession = useSyncExternalStore(projects.subscribe, projects.getSession)
+    useEffect(() => projects.connect(), [projects])
     const previewSnapshots = usePreviewSnapshots()
 
 
@@ -929,6 +932,7 @@ function AppShell() {
                     ============================== */}
 
                 <Sidebar
+                    projects={projects}
                     isExpanded={sidebarExpanded}
                     width={sidebarWidth}
                     minimumWidth={MINIMUM_SIDEBAR_WIDTH}

@@ -27,11 +27,11 @@ test("standalone links preserve domain-root paths, settings and query/hash on di
     const popup = await popupPromise
     await popup.waitForLoadState()
     expect(new URL(popup.url()).pathname).toMatch(new RegExp(`^${pagesBasePath}frontend/visualized/?$`))
-    await expect(popup.getByRole("status")).toContainText("Tablet preview selected")
+    await expect(popup.getByRole("status", { name: "Preview device" })).toContainText("Tablet preview selected")
     const response = await page.goto("frontend/visualized?device=phone&zoom=125&css=false&note=a%26b%3Fc%20d#sample")
     expect(response.status()).toBe(200)
     await expect(page).toHaveTitle("Visualized - Visualizer Lab")
-    await expect(page.getByRole("status")).toContainText("Phone preview selected")
+    await expect(page.getByRole("status", { name: "Preview device" })).toContainText("Phone preview selected")
     await expect(page.getByRole("button", { name: "CSS", exact: true })).toHaveAttribute("aria-pressed", "false")
     const before = page.url()
     await page.reload()

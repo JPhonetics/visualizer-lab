@@ -1,8 +1,9 @@
 # Visualizer Lab — Roadmap
 
-Active work: Phase 4 Live Preview on feature/live-preview. Foundation,
-testing, Pages preparation and the Phase 3 editor are merged; Pages publication succeeded, while
-certificate provisioning/HTTPS production sign-off remains an open external task.
+Active work: Phase 5 Local Projects on codex/local-projects. Foundation, testing,
+Pages preparation, editor and Live Preview are merged. Foundation is published;
+HTTPS was repaired and enforcement verified October 28, 2026. Later application
+milestones still require separately approved deployments.
 
 ## Phase 1 — Frontend Foundation
 Shell, Sidebar, Editor/Preview layout, resize/collapse behavior, theme, Preview controls, Visualized page, routing, selector, SPA fallback, UI cleanup, lint/build.
