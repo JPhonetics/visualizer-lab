@@ -52,12 +52,13 @@ test("editing retains language buffers, history and collapse state without leaki
     await expect(css).toBeFocused()
     await expect(page.locator(".preview-frame")).toHaveAttribute("srcdoc", /My editable page/)
     expect(await page.evaluate(() => window.editorExample)).toBeUndefined()
-    const stored = await page.evaluate(() => Object.values(localStorage).join(" "))
-    expect(stored).not.toContain("editable page")
-    expect(stored).not.toContain("frame only")
+    await expect.poll(() => page.evaluate(() => JSON.parse(localStorage.getItem("visualizerLab.projects.v1"))?.draft.sources.html)).toBe("<h1>My editable page</h1>!")
+    const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("visualizerLab.projects.v1")))
+    expect(stored.draft.sources.html).toContain("editable page")
+    expect(stored.draft.sources.javascript).toContain("frame only")
     expect(dialogs).toEqual([])
     await page.reload()
-    await expect(page.getByRole("textbox", { name: "HTML code editor" })).toHaveText("")
+    await expect(page.getByRole("textbox", { name: "HTML code editor" })).toHaveText("<h1>My editable page</h1>!")
     expect(errors).toEqual([])
 })
 
@@ -114,10 +115,16 @@ test("keywords and strings change palette with readable contrast in both themes"
         await expect(page.getByRole("button", { name: new RegExp(`Theme: ${theme}`) })).toBeVisible()
         await expect(keyword).toHaveCSS("color", keywordColor)
         await expect(string).toHaveCSS("color", stringColor)
-        const backgrounds = await page.locator(".cm-editor").evaluate(el => [
-            getComputedStyle(el).backgroundColor,
-            getComputedStyle(el.querySelector(".cm-activeLine")).backgroundColor,
-        ])
+        const backgrounds = await page.locator(".cm-editor").evaluate(el => {
+            const base = getComputedStyle(el).backgroundColor
+            const line = getComputedStyle(el.querySelector(".cm-activeLine")).backgroundColor
+            // Contrast uses the painted color, including translucent line overlays.
+            const channels = value => value.match(/[\d.]+/g).map(Number)
+            const [red, green, blue, alpha = 1] = channels(line)
+            const under = channels(base)
+            const blended = [red, green, blue].map((channel, index) => Math.round(channel * alpha + under[index] * (1 - alpha)))
+            return [base, `rgb(${blended.join(", ")})`]
+        })
         for (const background of backgrounds) {
             expect(contrastRatio(keywordColor, background)).toBeGreaterThanOrEqual(4.5)
             expect(contrastRatio(stringColor, background)).toBeGreaterThanOrEqual(4.5)

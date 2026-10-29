@@ -35,7 +35,7 @@ test("renders editor layers, reloads scripts and keeps execution inside the ifra
     await expect(frame.locator("#result")).toHaveText("JS ran")
 })
 
-test("standalone receives a fixed snapshot without source in URLs or storage", async ({ page }) => {
+test("standalone receives a fixed in-memory snapshot independent of persisted Current Work", async ({ page }) => {
     await page.goto("/frontend")
     const html = page.getByRole("textbox", { name: "HTML code editor" })
     await html.fill("<h1>Initial snapshot</h1>")
@@ -45,8 +45,9 @@ test("standalone receives a fixed snapshot without source in URLs or storage", a
     const frame = popup.frameLocator(".preview-frame")
     await expect(frame.getByRole("heading")).toHaveText("Initial snapshot")
     expect(popup.url()).not.toContain("Initial")
-    const snapshots = await popup.evaluate(() => ({ local: { ...localStorage }, session: { ...sessionStorage } }))
-    expect(JSON.stringify(snapshots)).not.toContain("Initial snapshot")
+    const snapshots = await popup.evaluate(() => ({ keys: Object.keys(localStorage), session: { ...sessionStorage } }))
+    expect(snapshots.keys.every(key => !key.includes("snapshot"))).toBe(true)
+    expect(JSON.stringify(snapshots.session)).not.toContain("Initial snapshot")
     await html.fill("<h1>Changed workspace</h1>")
     await expect(page.frameLocator(".preview-frame").getByRole("heading")).toHaveText("Changed workspace")
     await expect(frame.getByRole("heading")).toHaveText("Initial snapshot")

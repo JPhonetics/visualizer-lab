@@ -21,11 +21,11 @@ const highlighting = HighlightStyle.define([
 
 // Immutable states keep each document's text, selection and undo history. The
 // workspace owns the session so destroying a collapsed view never loses edits.
-export default function createEditorSession() {
+export default function createEditorSession(sources = { html: "", css: "", javascript: "" }) {
     const states = new Map(Object.entries(LANGUAGES).map(([language, support]) => [
         language,
         EditorState.create({
-            doc: "",
+            doc: sources[language],
             extensions: [
                 support(),
                 history(),
@@ -48,7 +48,7 @@ export default function createEditorSession() {
         }),
     ]))
 
-    let snapshot = { html: "", css: "", javascript: "" }
+    let snapshot = { ...sources }
     const listeners = new Set()
 
     return {

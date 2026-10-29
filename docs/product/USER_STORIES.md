@@ -59,9 +59,11 @@ Acceptance criteria and the exact human checklist are maintained in
 
 ## Future stories
 
-### Saved work
+### Saved work — Phase 5
 
 As a learner, I want to save projects locally so I can return to them later without creating an account.
+
+Acceptance and browser review: [Local Projects](../milestones/LOCAL_PROJECTS.md).
 
 ### Export and import
 

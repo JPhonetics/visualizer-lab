@@ -47,7 +47,7 @@ test("workspace keyboard controls, drag persistence and collapse survive refresh
 test("Preview transfers settings to standalone and workspace controls reset", async ({ page }) => {
     await page.goto("/frontend")
     await page.getByRole("button", { name: /Desktop preview/ }).click()
-    await expect(page.getByRole("status")).toContainText("Tablet preview selected")
+    await expect(page.getByRole("status", { name: "Preview device" })).toContainText("Tablet preview selected")
     await expect(page.locator(".preview-viewport")).toHaveCSS("max-width", "768px")
     await page.getByRole("button", { name: "CSS", exact: true }).click()
     const popupPromise = page.waitForEvent("popup")
@@ -55,12 +55,12 @@ test("Preview transfers settings to standalone and workspace controls reset", as
     const popup = await popupPromise
     await popup.waitForLoadState()
     await expect(popup).toHaveTitle("Visualized - Visualizer Lab")
-    await expect(popup.getByRole("status")).toContainText("Tablet preview selected")
+    await expect(popup.getByRole("status", { name: "Preview device" })).toContainText("Tablet preview selected")
     await expect(popup.getByRole("button", { name: "CSS", exact: true })).toHaveAttribute("aria-pressed", "false")
     await popup.reload()
-    await expect(popup.getByRole("status")).toContainText("Tablet preview selected")
+    await expect(popup.getByRole("status", { name: "Preview device" })).toContainText("Tablet preview selected")
     await page.reload()
-    await expect(page.getByRole("status")).toContainText("Desktop preview selected")
+    await expect(page.getByRole("status", { name: "Preview device" })).toContainText("Desktop preview selected")
     await expect(page.getByRole("button", { name: "CSS", exact: true })).toHaveAttribute("aria-pressed", "true")
 })
 
@@ -73,7 +73,7 @@ test("direct routes and stale saved visualizer resolve intentionally", async ({ 
     }
     await page.goto("/frontend/visualized?device=phone&zoom=125")
     await expect(page).toHaveTitle("Visualized - Visualizer Lab")
-    await expect(page.getByRole("status")).toContainText("Phone preview selected")
+    await expect(page.getByRole("status", { name: "Preview device" })).toContainText("Phone preview selected")
     await page.reload()
-    await expect(page.getByRole("status")).toContainText("Phone preview selected")
+    await expect(page.getByRole("status", { name: "Preview device" })).toContainText("Phone preview selected")
 })

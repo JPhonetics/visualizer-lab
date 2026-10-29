@@ -25,13 +25,13 @@ describe("workspace integration", () => {
         expect(width).toHaveAttribute("aria-valuenow", "360")
         await user.click(screen.getByRole("tab", { name: "CSS" }))
         await user.click(screen.getByRole("button", { name: /Desktop preview/ }))
-        expect(screen.getByRole("status")).toHaveTextContent("Tablet preview selected")
+        expect(screen.getByRole("status", { name: "Preview device" })).toHaveTextContent("Tablet preview selected")
         first.unmount()
         render(<App />)
         await screen.findByRole("tab", { name: "HTML" })
         expect(screen.getByRole("separator", { name: "Workspace sidebar width" })).toHaveAttribute("aria-valuenow", "360")
         expect(screen.getByRole("tab", { name: "HTML" })).toHaveAttribute("aria-selected", "true")
-        expect(screen.getByRole("status")).toHaveTextContent("Desktop preview selected")
+        expect(screen.getByRole("status", { name: "Preview device" })).toHaveTextContent("Desktop preview selected")
     })
 
     it("keeps at least one panel open and disables the divider when collapsed", async () => {

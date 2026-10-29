@@ -12,13 +12,15 @@ prefix or hash routing. The user reports Porkbun as registrar and Cloudflare as 
 A public NS lookup on 2026-10-26 confirmed ben.ns.cloudflare.com and
 harleigh.ns.cloudflare.com for visualizerlab.dev. The earlier Afternic results
 were for the mistakenly supplied .com domain and do not apply to this site.
-Existing apex A records do not yet match the GitHub Pages targets below.
-This preparation does not change domain or repository settings.
+HTTPS recovery on October 28, 2026 verified GitHub Pages IPv4/IPv6 targets,
+valid apex/www DNS health, and no CAA errors. Removing and restoring the same
+custom domain restarted stalled certificate issuance; HTTPS enforcement and
+certificate-verified routes/assets then passed. No application deployment occurred.
 
 Acceptance: assets load at the domain root; direct workspace/standalone visits and
 refresh succeed; standalone settings survive; unknown paths return to Frontend;
-publishing requires an approved manual workflow dispatch from main. Actual-host
-checks remain pending publication approval.
+publishing requires an approved manual workflow dispatch from main. The Foundation artifact has been published and HTTPS route/asset checks passed;
+new application milestones require separate deployment approval and verification.
 
 ## Build and routing
 

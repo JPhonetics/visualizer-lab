@@ -250,6 +250,9 @@
 
 .sidebar {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 
     min-width: 0;
 
@@ -273,6 +276,7 @@
    ============================== */
 
 .sidebar-header {
+    flex-shrink: 0;
     min-height: 40px;
 
     display: flex;
@@ -378,7 +382,8 @@
    ============================== */
 
 .sidebar-main {
-    height: calc(100% - 40px);
+    flex: 1;
+    overflow: hidden;
 
     display: flex;
     flex-direction: column;
@@ -431,7 +436,9 @@
    ============================== */
 
 .sidebar-work-area {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
 
     min-height: 0;
 
@@ -2088,4 +2095,301 @@
     border-radius: 6px;
     color: var(--color-text);
     background: var(--color-surface);
+}
+
+/* Local project controls reuse Sidebar structure without changing drag geometry. */
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.project-actions .button {
+    white-space: normal;
+    text-align: start;
+}
+
+.project-status,
+.project-storage-note {
+    margin: 10px 0 0;
+    color: var(--color-text-muted);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.project-status[role="alert"] {
+    color: var(--color-text);
+}
+
+.saved-projects {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.saved-projects li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--color-border-soft);
+}
+
+.project-name {
+    display: block;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.project-name-control {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    flex: 1;
+}
+
+.project-name-control > [hidden],
+.project-name-control > .button[hidden] {
+    display: none;
+}
+
+.project-name-control .project-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.project-icon-button.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 4px;
+    width: 28px;
+    height: 28px;
+}
+
+.saved-projects li,
+.current-project-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    column-gap: 4px;
+    row-gap: 0;
+    padding: 5px 0;
+}
+
+.saved-projects .project-actions,
+.current-project-row .project-actions {
+    margin: 0;
+    gap: 2px;
+    flex-shrink: 0;
+}
+
+.project-rename-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-width: 0;
+    width: 100%;
+}
+
+.project-rename-form input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 5px;
+    font: inherit;
+    color: var(--color-text);
+    background: var(--color-background);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 4px;
+}
+
+.project-name-error {
+    width: 100%;
+    font-size: 12px;
+}
+
+.project-name-trigger.button {
+    padding: 4px 2px;
+    border-color: transparent;
+    background: transparent;
+    text-align: start;
+    width: 100%;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.project-name-trigger.button:hover {
+    background: var(--color-surface-hover);
+}
+
+.saved-project-details {
+    display: contents;
+}
+
+.saved-projects .project-name-control,
+.current-project-row .project-name-control {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.saved-projects .project-actions,
+.current-project-row .project-actions {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.saved-projects .project-edit-time,
+.current-project-row .project-edit-time {
+    grid-column: 1 / -1;
+    grid-row: 2;
+}
+
+.project-edit-time {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+
+.project-cancel-button.button {
+    color: #b42318;
+}
+
+:root[data-theme="dark"] .project-cancel-button.button {
+    color: #ff8c85;
+}
+
+
+.project-apply-button.button {
+    color: #16713f;
+}
+
+:root[data-theme="dark"] .project-apply-button.button {
+    color: #77d69b;
+}
+
+
+.project-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    margin-bottom: 6px;
+}
+
+.project-section-heading h2 {
+    margin: 0;
+}
+
+
+.sidebar-work-area > .project-controls {
+    flex-shrink: 0;
+}
+
+.sidebar-work-area > .saved-work-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 90px;
+}
+
+.numbered-project-name {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    gap: 4px;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.project-order-number {
+    color: var(--color-text-muted);
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+.project-reorder-help {
+    margin: 0 0 6px;
+    color: var(--color-text-muted);
+    font-size: 11px;
+}
+
+.saved-projects.is-reordering li {
+    cursor: grab;
+    user-select: none;
+}
+
+.saved-projects.is-reordering li:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: -2px;
+}
+
+.saved-projects.is-reordering li.is-dragging {
+    cursor: grabbing;
+}
+
+.saved-projects.is-reordering .numbered-project-name {
+    min-height: 28px;
+}
+
+.saved-projects li.is-dragging {
+    opacity: 0.55;
+    background: var(--color-surface-active);
+    outline: 1px dashed var(--color-focus);
+    outline-offset: -1px;
+}
+
+.saved-projects li.is-moved {
+    background: var(--color-surface-active);
+}
+
+.saved-projects li.is-drop-before {
+    background: var(--color-surface-hover);
+    box-shadow: inset 0 3px var(--color-focus);
+}
+
+.saved-projects li.is-drop-after {
+    background: var(--color-surface-hover);
+    box-shadow: inset 0 -3px var(--color-focus);
+}
+
+
+/* Keep row content aligned while bringing the scroll track near the border. */
+.saved-work-section .saved-projects {
+    margin-right: -10px;
+    padding-right: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-text-muted) 40%, transparent) transparent;
+}
+
+.saved-work-section .saved-projects::-webkit-scrollbar {
+    width: 6px;
+}
+
+.saved-work-section .saved-projects::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.saved-work-section .saved-projects::-webkit-scrollbar-thumb {
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--color-text-muted) 40%, transparent);
+}
+
+.saved-work-section .saved-projects:hover {
+    scrollbar-color: color-mix(in srgb, var(--color-text-muted) 65%, transparent) transparent;
+}
+
+.saved-work-section .saved-projects::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--color-text-muted) 65%, transparent);
 }

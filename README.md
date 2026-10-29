@@ -1,15 +1,18 @@
 # Visualizer Lab
 
 A learning-focused React application for exploring code visually. Foundation,
-testing and the real Frontend editor are merged. Live Preview is the active milestone.
+testing, the real Frontend editor and Live Preview are merged. Local Projects
+is the active milestone.
 
 Each language keeps its text and undo history while switching tabs or collapsing
-the Editor. Documents are session-only and reset on refresh. Preview now renders
+the Editor. Current Work now saves locally and restores after refresh. Named saved copies
+can be opened, renamed, searched, updated with Save, and deleted. Preview renders
 HTML, CSS and JavaScript after a short pause, with CSS/JS switches and Reload.
-Standalone Preview receives a fixed in-memory snapshot. Functional Templates,
-Saved Work and other visualizers remain later work.
+Standalone Preview receives a fixed in-memory snapshot. Functional Templates
+and other visualizers remain later work. Projects stay in this browser and can
+be lost when site data is cleared; saving failures appear in the Sidebar.
 
-See [Live Preview acceptance and browser review](docs/milestones/LIVE_PREVIEW.md).
+See [Local Projects acceptance and browser review](docs/milestones/LOCAL_PROJECTS.md).
 
 ## Development
 
@@ -68,6 +71,7 @@ local development still uses `/frontend`.
 Build with `npm run build:pages`, then `npm run preview:pages` to inspect
 `http://127.0.0.1:4179/`. Publishing is a separate approved manual
 workflow from main, not an automatic result of merging. The Foundation site has been published; editor and Live Preview changes require
-a separately approved deployment. HTTPS provisioning still needs production sign-off. See [deployment setup and verification](docs/development/DEPLOYMENT.md),
+a separately approved deployment. HTTPS certificate validation and enforcement
+were verified October 28, 2026. See [deployment setup and verification](docs/development/DEPLOYMENT.md),
 [step-by-step owner guide](docs/development/PAGES_SETUP_GUIDE.md),
 and [versioning](docs/releases/VERSIONING.md).

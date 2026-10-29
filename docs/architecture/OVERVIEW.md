@@ -66,8 +66,8 @@ AppShell owns a session with one immutable CodeMirror EditorState per language.
 EditorPanel owns the transient selected tab. CodeEditor creates a view for that
 language and retains each transaction's state in the session; cleanup destroys
 only the view. Text, selection and undo history survive panel/tab unmounting.
-No keystroke updates React shell state or localStorage. Refresh/route unmount ends
-the workspace session. Preview subscribes to cached text snapshots independently
+No keystroke updates React shell state. The project controller separately batches
+text persistence; refresh restores source but resets editor history. Preview subscribes to cached text snapshots independently
 through useSyncExternalStore; selection-only transactions do not notify it.
 
 The workspace route is loaded lazily, so standalone Visualized does not fetch the
@@ -136,3 +136,16 @@ This keeps the application useful without requiring a backend early.
 JavaScript and Python visualizers should share the application shell but own language-specific execution and visualization logic.
 
 Do not force language execution visualization into the Frontend Preview architecture.
+
+## Local project ownership
+
+AppShell owns a project workspace controller. React subscribes to session identity
+so opening/new work replaces mounted editor views; Sidebar subscribes to library
+and save-status snapshots. Text subscriptions batch persistence separately from
+Preview updates. The controller outlives Sidebar/Editor collapse and cleans up
+storage/page lifecycle listeners on workspace unmount.
+
+See [Local Projects](../milestones/LOCAL_PROJECTS.md) for schema, bounds, conflict
+detection, failure handling and manual acceptance. Layout preference ownership is
+unchanged. Project sources now persist intentionally; temporary standalone snapshot
+channels remain ephemeral.

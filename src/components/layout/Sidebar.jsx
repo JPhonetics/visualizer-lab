@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
 import Button from "../ui/Button.jsx"
+import ProjectControls from "../../features/projects/ProjectControls.jsx"
 import useLocalStorageState from "../../hooks/useLocalStorageState.js"
 import keyboardResize from "../../utils/keyboardResize.js"
 
@@ -109,6 +110,7 @@ const STORAGE_KEYS = {
 
 
 function Sidebar({
+    projects,
     isExpanded,
     onResizeStart,
     onResizeKeyDown,
@@ -678,48 +680,7 @@ function Sidebar({
                         SEARCH
                         ============================== */}
 
-                    <div className="sidebar-search-area">
-                        <input
-                            id="workspace-search"
-                            className="sidebar-search"
-                            type="search"
-                            placeholder="Search work & templates"
-                            aria-label="Search work and templates"
-                        />
-                    </div>
-
-
-                    {/* ==============================
-                        WORK AREA
-                        ============================== */}
-
-                    <div className="sidebar-work-area">
-
-                        <section className="sidebar-section">
-                            <h2>
-                                Current Work
-                            </h2>
-
-                            <div
-                                className="current-work sidebar-item"
-                                title="Untitled"
-                            >
-                                Untitled
-                            </div>
-                        </section>
-
-
-                        <section className="sidebar-section">
-                            <h2>
-                                Saved Work
-                            </h2>
-
-                            <div className="sidebar-placeholder">
-                                No saved work yet.
-                            </div>
-                        </section>
-
-                    </div>
+                    <ProjectControls projects={projects} />
 
 
                     {/* ==============================

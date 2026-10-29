@@ -12,6 +12,12 @@
 - Add static route/404 entries, Pages-style browser checks, a custom-domain target guard and manual-only publication workflow.
 
 ### Added
+- Clear drag insertion markers, moved-row highlights/position feedback and a move-to-top action for saved projects.
+- Numbered, scrollable Saved Work with persisted drag/keyboard reordering while preserving Templates resize space.
+- Save creates or updates a linked saved project; Save As creates a named copy.
+- Compact Save/Save As/New and folder/trash icons, double-click/keyboard renaming, and visible draft/saved edit timestamps.
+- Current Work autosave and refresh restoration with named local saved copies, search, rename, open and delete.
+- Versioned bounded project storage, explicit save failures and observed multi-tab conflict detection.
 - Live HTML/CSS/JavaScript Preview with debounced updates, immediate Reload and sandboxed script execution.
 - Standalone in-memory snapshots with explicit unavailable feedback and no source in URLs/storage.
 - Editable CodeMirror HTML, CSS and JavaScript documents with separate session undo/selection state.
@@ -27,6 +33,8 @@
 - Replace device emoji with consistent monitor, tablet and phone outline icons.
 
 ### Fixed
+- Keep editor selections visible on the active line and strengthen Light/Dark highlight colors.
+- Use inline project rename fields in browsers that suppress native prompts.
 - Use distinct blue keywords and red strings in the Light editor palette, with theme/contrast browser regression checks.
 - Announce Preview device selections through a dedicated screen-reader status.
 - Add keyboard resizing and accessible separator values for layout controls.
